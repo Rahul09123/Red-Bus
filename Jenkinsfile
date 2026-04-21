@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
+        KUBECONFIG_ID = 'k8s-config'
     }
     
     stages {
@@ -55,35 +56,39 @@ pipeline {
         
         stage('Deploy to Kubernetes') {
             steps {
-                echo '========== Deploying to Kubernetes =========='
-                sh '''
-                    kubectl apply -f k8s/namespace.yaml
-                    kubectl apply -f k8s/configmap.yaml
-                    kubectl apply -f k8s/secrets.yaml
-                    kubectl apply -f k8s/postgres.yaml
-                    kubectl apply -f k8s/pgadmin.yaml
-                    kubectl apply -f k8s/eureka-server.yaml
-                    kubectl apply -f k8s/api-gateway.yaml
-                    kubectl apply -f k8s/member-service.yaml
-                    kubectl apply -f k8s/security-service.yaml
-                    kubectl apply -f k8s/expedition-service.yaml
-                    kubectl apply -f k8s/payment-service.yaml
-                    kubectl apply -f k8s/frontend.yaml
-                    kubectl apply -f k8s/ingress.yaml
-                    kubectl apply -f k8s/elk-stack.yaml
-                    kubectl apply -f k8s/hpa.yaml
-                '''
+                withKubeConfig([credentialsId: "${KUBECONFIG_ID}"]) {
+                    echo '========== Deploying to Kubernetes =========='
+                    sh '''
+                        kubectl apply -f k8s/namespace.yaml
+                        kubectl apply -f k8s/configmap.yaml
+                        kubectl apply -f k8s/secrets.yaml
+                        kubectl apply -f k8s/postgres.yaml
+                        kubectl apply -f k8s/pgadmin.yaml
+                        kubectl apply -f k8s/eureka-server.yaml
+                        kubectl apply -f k8s/api-gateway.yaml
+                        kubectl apply -f k8s/member-service.yaml
+                        kubectl apply -f k8s/security-service.yaml
+                        kubectl apply -f k8s/expedition-service.yaml
+                        kubectl apply -f k8s/payment-service.yaml
+                        kubectl apply -f k8s/frontend.yaml
+                        kubectl apply -f k8s/ingress.yaml
+                        kubectl apply -f k8s/elk-stack.yaml
+                        kubectl apply -f k8s/hpa.yaml
+                    '''
+                }
             }
         }
         
         stage('Verify Deployment') {
             steps {
-                echo '========== Verifying Deployment =========='
-                sh '''
-                    sleep 30
-                    kubectl get pods -n redbus
-                    kubectl get svc -n redbus
-                '''
+                withKubeConfig([credentialsId: "${KUBECONFIG_ID}"]) {
+                    echo '========== Verifying Deployment =========='
+                    sh '''
+                        sleep 30
+                        kubectl get pods -n redbus
+                        kubectl get svc -n redbus
+                    '''
+                }
             }
         }
     }

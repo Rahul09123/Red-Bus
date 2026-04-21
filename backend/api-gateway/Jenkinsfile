@@ -5,14 +5,24 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
         DOCKER_HUB_USERNAME = 'rahulraman'
         SERVICE_NAME = 'api-gateway'
-        IMAGE_NAME = "${{DOCKER_HUB_USERNAME}}/redbus-${{SERVICE_NAME}}:latest"
+        IMAGE_NAME = "${DOCKER_HUB_USERNAME}/redbus-${SERVICE_NAME}:latest"
+        GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
+        // Add homebrew and local bin to PATH for Mac
+        PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
     }
     
     stages {
+        stage('Clone Repository') {
+            steps {
+                echo "========== Cloning Repository for ${SERVICE_NAME} =========="
+                git branch: 'main', url: "${GIT_REPO}"
+            }
+        }
+
         stage('Build') {
             steps {
-                echo "========== Building ${{SERVICE_NAME}} =========="
-                dir("backend/${{SERVICE_NAME}}") {
+                echo "========== Building ${SERVICE_NAME} =========="
+                dir("backend/${SERVICE_NAME}") {
                     sh 'mvn clean package -DskipTests'
                 }
             }
@@ -20,8 +30,8 @@ pipeline {
         
         stage('Test') {
             steps {
-                echo "========== Testing ${{SERVICE_NAME}} =========="
-                dir("backend/${{SERVICE_NAME}}") {
+                echo "========== Testing ${SERVICE_NAME} =========="
+                dir("backend/${SERVICE_NAME}") {
                     sh 'mvn test'
                 }
             }
@@ -29,21 +39,21 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                echo "========== Building Docker Image for ${{SERVICE_NAME}} =========="
-                dir("backend/${{SERVICE_NAME}}") {
-                    sh "docker build -t ${{IMAGE_NAME}} ."
+                echo "========== Building Docker Image for ${SERVICE_NAME} =========="
+                dir("backend/${SERVICE_NAME}") {
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
-
+        
         stage('Push to Docker Hub') {
             steps {
-                echo "========== Pushing ${{SERVICE_NAME}} to Docker Hub =========="
-                sh '''
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
-                    docker push ''' + "${IMAGE_NAME}" + '''
+                echo "========== Pushing ${SERVICE_NAME} to Docker Hub =========="
+                sh """
+                    echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                    docker push ${IMAGE_NAME}
                     docker logout
-                '''
+                """
             }
         }
     }
@@ -53,10 +63,10 @@ pipeline {
             cleanWs()
         }
         success {
-            echo "✅ ${{SERVICE_NAME}} pipeline succeeded!"
+            echo "✅ ${SERVICE_NAME} pipeline succeeded!"
         }
         failure {
-            echo "❌ ${{SERVICE_NAME}} pipeline failed!"
+            echo "❌ ${SERVICE_NAME} pipeline failed!"
         }
     }
 }
