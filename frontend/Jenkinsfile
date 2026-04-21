@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_HUB_USERNAME = 'rahulraman'
+        SERVICE_NAME = 'frontend'
+        IMAGE_NAME = "${DOCKER_HUB_USERNAME}/redbus-${SERVICE_NAME}:latest"
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo "========== Building ${SERVICE_NAME} =========="
+                dir("frontend") {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                echo "========== Building Docker Image for ${SERVICE_NAME} =========="
+                dir("frontend") {
+                    // Check Dockerfile name, in docker-compose.yml it was DockerFile
+                    sh "docker build -f DockerFile -t ${IMAGE_NAME} ."
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                echo "========== Pushing ${SERVICE_NAME} to Docker Hub =========="
+                sh '''
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                    docker push ''' + "${IMAGE_NAME}" + '''
+                    docker logout
+                '''
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo "✅ ${SERVICE_NAME} pipeline succeeded!"
+        }
+        failure {
+            echo "❌ ${SERVICE_NAME} pipeline failed!"
+        }
+    }
+}
