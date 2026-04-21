@@ -5,9 +5,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
         DOCKER_HUB_USERNAME = 'rahul0129'
         SERVICE_NAME = 'api-gateway'
-        IMAGE_NAME = "${DOCKER_HUB_USERNAME}/redbus-${SERVICE_NAME}:latest"
         GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
-        // Add homebrew and local bin to PATH for Mac
         PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
     }
     
@@ -16,10 +14,25 @@ pipeline {
             steps {
                 echo "========== Cloning Repository for ${SERVICE_NAME} =========="
                 git branch: 'main', url: "${GIT_REPO}"
+                script {
+                    env.GIT_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    env.IMAGE_NAME = "${DOCKER_HUB_USERNAME}/redbus-${SERVICE_NAME}:${env.GIT_TAG}"
+                    
+                    echo "Checking if image ${env.IMAGE_NAME} exists on Docker Hub..."
+                    def exists = sh(script: "docker manifest inspect ${env.IMAGE_NAME} > /dev/null 2>&1", returnStatus: true)
+                    if (exists == 0) {
+                        echo "✅ Image ${env.IMAGE_NAME} already exists. Skipping build."
+                        env.SKIP_BUILD = "true"
+                    } else {
+                        echo "🚀 Image ${env.IMAGE_NAME} not found. Proceeding with build."
+                        env.SKIP_BUILD = "false"
+                    }
+                }
             }
         }
 
         stage('Build') {
+            when { environment name: 'SKIP_BUILD', value: 'false' }
             steps {
                 echo "========== Building ${SERVICE_NAME} =========="
                 dir("backend/${SERVICE_NAME}") {
@@ -29,6 +42,7 @@ pipeline {
         }
         
         stage('Test') {
+            when { environment name: 'SKIP_BUILD', value: 'false' }
             steps {
                 echo "========== Testing ${SERVICE_NAME} =========="
                 dir("backend/${SERVICE_NAME}") {
@@ -38,20 +52,22 @@ pipeline {
         }
         
         stage('Build Docker Image') {
+            when { environment name: 'SKIP_BUILD', value: 'false' }
             steps {
                 echo "========== Building Docker Image for ${SERVICE_NAME} =========="
                 dir("backend/${SERVICE_NAME}") {
-                    sh "docker build -t ${IMAGE_NAME} ."
+                    sh "docker build -t ${env.IMAGE_NAME} ."
                 }
             }
         }
         
         stage('Push to Docker Hub') {
+            when { environment name: 'SKIP_BUILD', value: 'false' }
             steps {
                 echo "========== Pushing ${SERVICE_NAME} to Docker Hub =========="
                 sh """
                     echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin
-                    docker push ${IMAGE_NAME}
+                    docker push ${env.IMAGE_NAME}
                     docker logout
                 """
             }
