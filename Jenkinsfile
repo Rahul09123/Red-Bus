@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        GIT_REPO = 'https://github.com/rahulraman/Tickting-System-Docker.git'
+        GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
     }
     
     stages {
