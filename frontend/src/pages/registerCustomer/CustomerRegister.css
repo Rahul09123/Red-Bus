@@ -1,0 +1,228 @@
+/* CustomerRegister.css */
+.customerRegPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.9;
+  filter: blur(0px);
+  transform: scale(1.0);
+
+  z-index: 0;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+.customerRegPage {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  position: relative;
+  overflow-x: hidden;
+}
+.customerRegPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+
+  z-index: 1;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.customerRegCard {
+  width: 100%;
+  max-width: 560px;
+
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 28px;
+  box-sizing: border-box;
+
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+.alert {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin: 10px 0 14px 0;
+}
+
+.alertError {
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.08);
+  color: #DC2626;
+}
+
+.alertOk {
+  border: 1px solid rgba(220, 38, 38, 0.22);
+  background: rgba(220, 38, 38, 0.08);
+  color: #DC2626;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 116, 139, 0.32);
+  font-size: 14px;
+  background: #FFFFFF;
+  color: #1E293B;
+  caret-color: #DC2626;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.select {
+  appearance: none;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.inputError {
+  border-color: rgba(220, 38, 38, 0.75);
+}
+
+.inputError:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.error {
+  font-size: 12px;
+  color: #DC2626;
+  margin-top: -2px;
+}
+
+.primaryButton {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #DC2626;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.primaryButton:hover {
+  background: #0044A6;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.ghostButton {
+  background: transparent;
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  color: #1E293B;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ghostButton:hover {
+  background: rgba(100, 116, 139, 0.08);
+}
+
+.muted {
+  font-size: 13px;
+  color: #64748B;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

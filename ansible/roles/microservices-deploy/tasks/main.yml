@@ -1,0 +1,73 @@
+---
+- name: Deploy Eureka Server
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/eureka-server.yaml') | from_yaml_all | list }}"
+
+- name: Wait for Eureka Server to be ready
+  kubernetes.core.k8s_info:
+    kind: Pod
+    namespace: "{{ k8s_namespace }}"
+    label_selectors:
+      - app=eureka-server
+  register: eureka_pods
+  until: 
+    - eureka_pods.resources | length > 0
+    - eureka_pods.resources[0].status.phase == "Running"
+  retries: 30
+  delay: 10
+
+- name: Deploy API Gateway
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/api-gateway.yaml') | from_yaml_all | list }}"
+
+- name: Deploy Member Service
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/member-service.yaml') | from_yaml_all | list }}"
+
+- name: Deploy Security Service
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/security-service.yaml') | from_yaml_all | list }}"
+
+- name: Deploy Expedition Service
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/expedition-service.yaml') | from_yaml_all | list }}"
+
+- name: Deploy Payment Service
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/payment-service.yaml') | from_yaml_all | list }}"
+
+- name: Deploy Frontend
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/frontend.yaml') | from_yaml_all | list }}"
+
+- name: Wait for all services to be ready
+  kubernetes.core.k8s_info:
+    kind: Deployment
+    namespace: "{{ k8s_namespace }}"
+  register: deployments
+  until: deployments.resources | length == 7 and (deployments.resources | map(attribute='status.readyReplicas') | list | sum) >= 11
+  retries: 30
+  delay: 10
+
+- name: Verify microservices deployment
+  command: "kubectl get pods -n {{ k8s_namespace }}"
+  changed_when: false
+  register: service_status
+
+- name: Display microservices status
+  debug:
+    msg: "{{ service_status.stdout }}"

@@ -1,0 +1,159 @@
+/* src/pages/registerAdmin/AdminRegister.css */
+.adminRegPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.9;
+  filter: blur(0px);
+  transform: scale(1.0);
+
+  z-index: 0;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.adminRegPage {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+
+  position: relative;   /* ← ŞART */
+  overflow: hidden;     /* ← bonus güvenlik */
+}
+
+.adminRegPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+
+  z-index: 1;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.adminRegCard {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  color: #1e293b;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.error {
+  font-size: 12px;
+  color: #dc2626;
+}
+
+.primaryButton {
+  margin-top: 6px;
+  padding: 14px;
+  background: #DC2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #0044a6;
+}
+
+.footerText {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Info screen */
+.infoTitle {
+  font-size: 22px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.infoText {
+  margin: 16px 0 24px;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

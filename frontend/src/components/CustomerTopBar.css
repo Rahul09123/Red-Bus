@@ -1,0 +1,87 @@
+/* src/components/CustomerTopBar.css */
+
+.customerTopBar {
+  height: 64px;
+  width: 100%;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+
+  position: relative;
+  z-index: 10;
+}
+
+/* Sol taraf */
+.left .brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.left .brand span {
+  color: #DC2626;
+}
+
+/* Sağ taraf */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navLink {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.navLink.active {
+  background: rgba(220, 38, 38, 0.12);
+  color: #DC2626;
+}
+
+/* Logout */
+.logoutBtn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background: rgba(220, 38, 38, 0.12);
+}
+
+/* Mobil */
+@media (max-width: 640px) {
+  .right {
+    gap: 6px;
+  }
+
+  .navLink,
+  .logoutBtn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}

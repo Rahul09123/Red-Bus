@@ -1,0 +1,252 @@
+.companyCreatePage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transform: scale(1.0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.companyCreatePage {
+  min-height: 100vh;
+  width: 100vw;
+  background: #F8F9FA;
+  display: grid;
+  place-items: center;
+
+  /* ✅ HEADER (64px) + sayfa padding */
+  padding: calc(64px + 24px) 24px 24px 24px;
+
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.companyCreatePage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.companyCreateCard {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 820px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+  box-sizing: border-box;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 760px) {
+  .grid2, .grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 14px;
+  background: #FFFFFF;
+  color: #1E293B;
+  caret-color: #DC2626;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #94A3B8;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.error {
+  border-color: #DC2626;
+}
+
+.errorText {
+  font-size: 12px;
+  color: #000000;
+}
+
+.primaryButton {
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #0044A6;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footerText {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.alert {
+  color: #000000;
+  background: rgba(220, 38, 38, 0.10);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.createdBox {
+  margin-top: 18px;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 16px;
+  background: #FFFFFF;
+}
+
+.createdTitle {
+  font-weight: 800;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+.createdGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .createdGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.createdItem {
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.createdLabel {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.createdValue {
+  font-size: 14px;
+  color: #1E293B;
+  font-weight: 700;
+}
+
+.secondaryButton {
+  margin-top: 12px;
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #DC2626;
+  color: #DC2626;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  background: rgba(220, 38, 38, 0.08);
+}

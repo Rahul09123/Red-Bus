@@ -1,0 +1,3 @@
+---
+k8s_namespace: ticketing-system
+cleanup_namespace: false

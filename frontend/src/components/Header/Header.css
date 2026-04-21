@@ -1,0 +1,53 @@
+.headerBar {
+  height: 64px;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  border-bottom: 1px solid rgba(100, 116, 139, 0.15);
+}
+
+.headerBrand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.headerBrand span {
+  color: #DC2626;
+}
+
+.headerNav {
+  display: flex;
+  gap: 16px;
+}
+
+.headerLink {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748B;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.headerLink:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: #1E293B;
+}
+
+.headerLink.active {
+  background: rgba(220, 38, 38, 0.12);
+  color: #DC2626;
+}
+.headerBrandLink {
+  text-decoration: none;
+}
+

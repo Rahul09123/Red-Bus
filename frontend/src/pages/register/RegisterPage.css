@@ -1,0 +1,202 @@
+/* RegisterPage.css */
+
+.registerPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.9;
+  filter: blur(0px);
+  transform: scale(1.0);
+
+  z-index: 0;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.registerPage {
+    min-height: calc(100vh - 64px);
+    width: 100vw;
+    background: #F8F9FA;
+    
+    display: grid;
+    place-items: center;
+    
+    padding: 24px;
+    box-sizing: border-box;
+    
+    position: relative;   /* <-- şart */
+    overflow-x: hidden;
+}
+.registerPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+
+  z-index: 1;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.registerCard {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 460px;
+
+  background: #FFFFFF;   /* ← BU SATIR ŞART */
+  opacity: 1;            /* ← ekstra garanti */
+
+  border-radius: 12px;
+  padding: 28px;
+  box-sizing: border-box;
+
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  width: 100%;
+  text-align: left;
+
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  border-radius: 12px;
+  background: #FFFFFF;
+
+  padding: 14px;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+.option:hover {
+  border-color: rgba(220, 38, 38, 0.45);
+  box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+}
+
+.option:active {
+  transform: translateY(1px);
+}
+
+.option.active {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.optionTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.badge {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: #DC2626;
+  background: rgba(220, 38, 38, 0.10);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.optionDesc {
+  margin: 0;
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.actions {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.primaryButton {
+  width: 100%;
+  padding: 14px;
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #0044A6;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footerText {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 420px) {
+  .registerCard {
+    padding: 22px;
+  }
+}

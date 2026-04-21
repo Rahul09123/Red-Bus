@@ -1,0 +1,27 @@
+---
+- name: Deploy Ticketing System to Kubernetes
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    ansible_connection: local
+    k8s_namespace: ticketing-system
+  roles:
+    - role: cluster-setup
+      tags: setup
+    - role: database-setup
+      tags: database
+    - role: microservices-deploy
+      tags: services
+    - role: monitoring-setup
+      tags: monitoring
+
+- name: Cleanup Ticketing System from Kubernetes
+  hosts: localhost
+  gather_facts: no
+  vars:
+    ansible_connection: local
+    k8s_namespace: ticketing-system
+  roles:
+    - role: cleanup
+      tags: cleanup
+  when: perform_cleanup | default(false)

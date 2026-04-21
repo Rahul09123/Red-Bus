@@ -1,0 +1,55 @@
+---
+- name: Deploy RedBus Application on K8s with ELK Stack
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    docker_hub_username: "{{ docker_hub_user }}"
+    docker_hub_password: "{{ docker_hub_pass }}"
+    k8s_namespace: redbus
+    app_version: "1.0.0"
+  
+  pre_tasks:
+    - name: Check if kubectl is installed
+      command: kubectl version --client
+      changed_when: false
+      failed_when: false
+      register: kubectl_check
+
+    - name: Install kubectl if not present (macOS)
+      shell: |
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
+        chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
+      when: 
+        - kubectl_check.rc != 0
+        - ansible_os_family == "Darwin"
+
+  roles:
+    - role: docker-setup
+      tags: docker
+    - role: kubernetes-setup
+      tags: kubernetes
+    - role: namespace-setup
+      tags: namespace
+    - role: secrets-vault
+      tags: vault
+    - role: database-setup
+      tags: database
+    - role: microservices-deploy
+      tags: deploy
+    - role: elk-stack
+      tags: elk
+    - role: monitoring
+      tags: monitoring
+    - role: ingress-setup
+      tags: ingress
+
+  post_tasks:
+    - name: Verify deployment
+      command: kubectl get pods -n {{ k8s_namespace }}
+      register: deployment_status
+      changed_when: false
+    
+    - name: Display deployment status
+      debug:
+        msg: "{{ deployment_status.stdout }}"

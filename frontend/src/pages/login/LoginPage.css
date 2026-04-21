@@ -1,0 +1,224 @@
+/* LoginPage.css — GARANTİ ORTALAMA */
+.loginPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.9;
+  filter: blur(0px);
+  transform: scale(1.0);
+
+  z-index: 0;
+  pointer-events: none; /* ✅ BUNU EKLE */
+}
+
+.loginPage {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  position: relative;   /* <-- şart */
+  overflow-x: hidden;
+}
+
+.loginPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(248, 249, 250, 0.55)
+  );
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+
+/* Login kartı */
+.loginCard {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 460px;
+
+  background: #FFFFFF;   /* ← BU SATIR ŞART */
+  opacity: 1;            /* ← ekstra garanti */
+
+  border-radius: 12px;
+  padding: 28px;
+  box-sizing: border-box;
+
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+}
+
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+/* Input */
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 14px;
+
+  background: #FFFFFF;
+
+  color: #1E293B;        /* ✅ YAZI RENGİ */
+  caret-color: #DC2626;  /* ✅ YANIP SÖNEN İMLEÇ */
+
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #94A3B8;
+}
+
+
+.input:focus {
+  outline: none;
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.error {
+  border-color: #DC2626;
+}
+
+.errorText {
+  font-size: 12px;
+  color: #DC2626;
+}
+
+/* Button */
+.primaryButton {
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #0044A6;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.footerText {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Error text: black */
+.errorText {
+  font-size: 12px;
+  color: #000000; /* ✅ black */
+}
+
+/* Hide/Show button styling (same as Sign In) */
+.togglePassword {
+  background: #DC2626;  /* same as .primaryButton */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 12px;
+  height: 40px;         /* input ile hizalı dursun */
+  display: inline-flex;
+  align-items: center;
+}
+
+.togglePassword:hover {
+  background: #0044A6;  /* same hover as .primaryButton */
+}
+
+.togglePassword:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.passwordInput {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Alert text: black */
+.alert {
+  color: #000000; /* ✅ siyah */
+}

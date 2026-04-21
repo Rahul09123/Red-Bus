@@ -1,0 +1,809 @@
+.travelPage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/bus-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    transform: scale(1.0);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.travelPage {
+    min-height: 100vh;
+    width: 100vw;
+    background: #F8F9FA;
+    display: grid;
+    place-items: start center;
+    /* Align top, center horizontally */
+    /* Header + padding */
+    padding: calc(64px + 24px) 24px 24px 24px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.travelPage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(220, 38, 38, 0.08),
+            rgba(248, 249, 250, 0.55));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.travelCard {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Header - Copied/Adapted from ProfilePage.css */
+.travelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(100, 116, 139, 0.18);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 12px 28px rgba(30, 41, 59, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+/* Main Content Card - previously .travelCard but now wrapped or separated */
+.travelContent {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 28px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+    border: 1px solid rgba(100, 116, 139, 0.18);
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    color: #1E293B;
+}
+
+.title span {
+    color: #DC2626;
+}
+
+.subtitle {
+    margin: 6px 0 0 0;
+    font-size: 13px;
+    color: #64748B;
+}
+
+/* Search Form */
+.searchForm {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 16px;
+    align-items: end;
+}
+
+@media (max-width: 768px) {
+    .searchForm {
+        grid-template-columns: 1fr;
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    /* For the popup */
+}
+
+.formLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+}
+
+/* Shared Input & Select Styles */
+.formInput {
+    padding: 10px 12px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1E293B;
+    outline: none;
+    transition: all 0.2s;
+    background-color: #FFFFFF;
+    height: 42px;
+    box-sizing: border-box;
+}
+
+.formInput:focus {
+    border-color: #DC2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    background-color: #FFFFFF;
+}
+
+/* Custom styling for select dropdowns to match inputs */
+select.formInput {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #64748B 50%),
+        linear-gradient(135deg, #64748B 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(50%),
+        calc(100% - 15px) calc(50%);
+    background-size: 5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+/* CUSTOM DATE PICKER STYLES */
+.dateGroup {
+    position: relative;
+    z-index: 50;
+    /* Ensure popup is above others */
+}
+
+.customDateInput {
+    background-color: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    border-radius: 8px;
+    color: #334155;
+    font-weight: 600;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.customDateInput:hover {
+    background-color: #FFFFFF;
+    border-color: #DC2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.08);
+    color: #DC2626;
+}
+
+.dateText {
+    flex: 1;
+}
+
+.calendarIcon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.calendarPopup {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 280px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #E2E8F0;
+    padding: 16px;
+    z-index: 100;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #1E293B;
+}
+
+.calendarHeader button {
+    background: transparent;
+    border: none;
+    color: #64748B;
+    cursor: pointer;
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+}
+
+.calendarHeader button:hover {
+    background: #F1F5F9;
+    color: #DC2626;
+}
+
+.calendarWeekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 11px;
+    color: #94A3B8;
+    font-weight: 700;
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendarDay {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #334155;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.calendarDay.empty {
+    cursor: default;
+}
+
+.calendarDay:not(.empty):hover {
+    background: #F1F5F9;
+    color: #DC2626;
+}
+
+.calendarDay.selected {
+    background: #DC2626;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.calendarDay.today {
+    border: 1px solid #CBD5E1;
+}
+
+.searchBtn {
+    background: #DC2626;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: 42px;
+}
+
+.searchBtn:hover {
+    background: #0044A4;
+}
+
+/* List Styles */
+.listWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.emptyBox {
+    border: 1px dashed rgba(203, 213, 225, 1);
+    border-radius: 12px;
+    padding: 24px;
+    color: #64748B;
+    background: #FFFFFF;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Expedition Card */
+.expeditionCard {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* New: Card Main Area (always visible) */
+.cardMain {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+}
+
+.expeditionCard:hover {
+    border-color: rgba(220, 38, 38, 0.35);
+    box-shadow: 0 12px 24px rgba(30, 41, 59, 0.1);
+}
+
+.cardLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.routeInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.companyName {
+    font-size: 12px;
+    font-weight: 800;
+    color: #64748B;
+    background: #F1F5F9;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.routeText {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1E293B;
+}
+
+.routeArrow {
+    color: #DC2626;
+    margin: 0 4px;
+}
+
+.detailsGrid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.detailLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94A3B8;
+    text-transform: uppercase;
+}
+
+.detailValue {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.cardRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    border-left: 1px solid #E2E8F0;
+    padding-left: 16px;
+    min-width: 120px;
+}
+
+.priceTag {
+    font-size: 20px;
+    font-weight: 800;
+    color: #DC2626;
+}
+
+.buyBtn {
+    background: #DC2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.buyBtn:hover {
+    background: #0044A4;
+    box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);
+}
+
+/* SEAT SELECTION AREA */
+.seatSelectionArea {
+    border-top: 1px solid #E2E8F0;
+    background: #F8FAFC;
+    padding: 20px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.seatAreaHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.seatAreaHeader h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #1E293B;
+}
+
+.seatLegend {
+    display: flex;
+    gap: 16px;
+}
+
+.legendItem {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.dot.available {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+}
+
+.dot.booked {
+    background: #CBD5E1;
+    opacity: 0.5;
+}
+
+.dot.selected {
+    background: #DC2626;
+}
+
+.seatsLoading {
+    text-align: center;
+    padding: 40px;
+    color: #64748B;
+    font-size: 14px;
+}
+
+.seatGridContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+}
+
+.driverArea {
+    width: 60px;
+    min-height: 200px;
+    /* span height of seats */
+    display: flex;
+    align-items: flex-end;
+    /* Driver at bottom-left */
+    justify-content: center;
+    border-bottom: none;
+    border-right: 2px solid #E2E8F0;
+    margin-bottom: 0;
+    margin-right: 0;
+    padding-right: 16px;
+}
+
+.driverSeat {
+    writing-mode: vertical-rl;
+    /* Rotate text */
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94A3B8;
+    background: #F1F5F9;
+    padding: 10px 6px;
+    border-radius: 6px;
+    border: 1px dashed #CBD5E1;
+}
+
+.busLayout {
+    display: grid;
+    /* 5 rows: 2 seats, 1 gap, 2 seats */
+    grid-template-rows: 40px 40px 40px 40px 40px;
+    grid-auto-flow: column;
+    gap: 12px 14px;
+    /* row-gap(vertical) col-gap(horizontal) */
+}
+
+/* Force seats into specific rows to skip the middle "aisle" row (row 3) */
+.seat:nth-child(4n+1) {
+    grid-row: 1;
+}
+
+.seat:nth-child(4n+2) {
+    grid-row: 2;
+}
+
+.seat:nth-child(4n+3) {
+    grid-row: 4;
+}
+
+.seat:nth-child(4n+4) {
+    grid-row: 5;
+}
+
+/* Make "aisle" by adding margin to every 2nd child? Or simpler: simple grid for now */
+
+.seat {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #CBD5E1;
+    background: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1E293B;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: grid;
+    place-items: center;
+}
+
+.seat:hover:not(:disabled) {
+    border-color: #DC2626;
+    transform: translateY(-2px);
+}
+
+.seat.reserved {
+    background: #E2E8F0;
+    color: #94A3B8;
+    border-color: transparent;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #DC2626;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+}
+
+.seatFooter {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #E2E8F0;
+    padding-top: 16px;
+}
+
+.selectionSummary {
+    font-weight: 700;
+    color: #1E293B;
+}
+
+.confirmBtn {
+    background: #10B981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.confirmBtn:hover {
+    background: #059669;
+}
+
+.confirmBtn:disabled {
+    background: #E2E8F0;
+    color: #94A3B8;
+    cursor: not-allowed;
+}
+
+.footerText {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    color: #64748B;
+}
+
+.link {
+    color: #DC2626;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* MODAL STYLES */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modalCard {
+    background: #FFFFFF;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modalHeader {
+    padding: 20px 24px;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1E293B;
+}
+
+.closeModalBtn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #64748B;
+    cursor: pointer;
+}
+
+.modalBody {
+    padding: 24px;
+}
+
+.modalSubtitle {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.savedCardsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.savedCardItem {
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.savedCardItem:hover {
+    border-color: #DC2626;
+    background: #F8FAFC;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.cardIcon {
+    font-size: 24px;
+    background: #F1F5F9;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+}
+
+.cardDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cardNumber {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+}
+
+.cardExpiry {
+    font-size: 12px;
+    color: #64748B;
+}
+
+.payNowBtn {
+    background: #DC2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.payNowBtn:hover {
+    background: #0044A4;
+}
+
+.payNowBtn:disabled {
+    background: #94A3B8;
+    cursor: not-allowed;
+}

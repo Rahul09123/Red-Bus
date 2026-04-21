@@ -1,0 +1,396 @@
+.companyDetailPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transform: scale(1.0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.companyDetailPage {
+  min-height: 100vh;
+  width: 100vw;
+  background: #F8F9FA;
+
+  display: grid;
+  place-items: center;
+
+  /* header 64px + padding */
+  padding: calc(64px + 24px) 24px 24px 24px;
+  box-sizing: border-box;
+
+  position: relative;
+  overflow-x: hidden;
+}
+
+.companyDetailPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.companyDetailCard {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 28px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+/* Top bar */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 14px 0;
+}
+
+.backBtn {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 800;
+  color: #1E293B;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.backBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 12px 26px rgba(30, 41, 59, 0.10);
+}
+
+.idPill {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(220, 38, 38, 0.10);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+/* Alert / Info */
+.alert {
+  color: #000000;
+  background: rgba(220, 38, 38, 0.10);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.infoBox {
+  color: #1E293B;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* Stats */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 12px 0 14px 0;
+}
+
+@media (max-width: 780px) {
+  .statsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  border-radius: 12px;
+  padding: 12px;
+  background: #FFFFFF;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 900;
+  color: #64748B;
+  margin-bottom: 6px;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1E293B;
+}
+
+/* Controls */
+.controlsRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin: 10px 0 14px 0;
+}
+
+.control {
+  min-width: 220px;
+  flex: 0 0 auto;
+}
+
+.control.grow {
+  flex: 1;
+  min-width: 240px;
+}
+
+.controlLabel {
+  font-size: 12px;
+  font-weight: 900;
+  color: #64748B;
+  margin-bottom: 6px;
+}
+
+.select,
+.input {
+  width: 100%;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-weight: 800;
+  color: #1E293B;
+  outline: none;
+  background: #FFFFFF;
+}
+
+.select:focus,
+.input:focus {
+  border-color: rgba(220, 38, 38, 0.55);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.refreshBtn {
+  background: #DC2626;
+  color: #FFFFFF;
+  border: 1px solid rgba(220, 38, 38, 0.65);
+  border-radius: 10px;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.refreshBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(30, 41, 59, 0.15);
+}
+
+.refreshBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* List header */
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 6px 0 10px 0;
+  gap: 12px;
+}
+
+.listTitle {
+  font-size: 16px;
+  font-weight: 900;
+  color: #1E293B;
+}
+
+.listHint {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 800;
+}
+
+/* Table */
+.tableWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emptyBox {
+  border: 1px dashed rgba(203, 213, 225, 1);
+  border-radius: 12px;
+  padding: 16px;
+  color: #64748B;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.table {
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.thead,
+.trow {
+  display: grid;
+  grid-template-columns: 120px 150px 1fr 120px;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.thead {
+  background: rgba(220, 38, 38, 0.06);
+  font-weight: 900;
+  color: #1E293B;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+}
+
+.trow {
+  font-size: 13px;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.6);
+}
+
+.trow:last-child {
+  border-bottom: none;
+}
+
+.seatNo {
+  font-weight: 900;
+  color: #1E293B;
+}
+
+.passenger {
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.right {
+  text-align: right;
+}
+
+.muted {
+  color: #64748B;
+  font-weight: 800;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  background: rgba(203, 213, 225, 0.35);
+  color: #1E293B;
+}
+
+.badge.AVAILABLE {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #065F46;
+}
+
+.badge.BOOKED,
+.badge.SOLD {
+  background: rgba(220, 38, 38, 0.10);
+  border-color: rgba(220, 38, 38, 0.25);
+  color: #7F1D1D;
+}
+
+.badge.RESERVED {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.30);
+  color: #7C2D12;
+}
+
+.badge.CANCELLED {
+  background: rgba(100, 116, 139, 0.14);
+  border-color: rgba(100, 116, 139, 0.30);
+  color: #334155;
+}
+
+/* Responsive */
+@media (max-width: 820px) {
+  .thead,
+  .trow {
+    grid-template-columns: 90px 120px 1fr 90px;
+  }
+}
+
+@media (max-width: 560px) {
+  .thead,
+  .trow {
+    grid-template-columns: 80px 120px 1fr;
+  }
+
+  .thead > :last-child,
+  .trow > :last-child {
+    display: none; /* hide seatId on small screens */
+  }
+}
+
+/* Footer */
+.footerText {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.link {
+  color: #DC2626;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

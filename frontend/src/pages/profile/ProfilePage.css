@@ -1,0 +1,458 @@
+/* src/pages/profile/ProfilePage.css */
+
+.profilePage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transform: scale(1.0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.profilePage {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+
+  display: grid;
+  place-items: start center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  position: relative;
+  overflow-x: hidden;
+}
+
+.profilePage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.profileShell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(100, 116, 139, 0.18);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 12px 28px rgba(30, 41, 59, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  color: #1E293B;
+}
+
+.subtitle {
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.toast {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.22);
+  color: #0044A6;
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+  border: 1px solid rgba(100, 116, 139, 0.18);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cardTitleWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 16px;
+  color: #1E293B;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: #DC2626;
+  background: rgba(220, 38, 38, 0.10);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* ✅ Add Card modal uses this */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.span2 {
+  grid-column: span 2;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #334155;
+}
+
+.input,
+.valueBox {
+  height: 42px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.input {
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  background: #FFFFFF;
+  color: #0F172A;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(220, 38, 38, 0.45);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.inputError {
+  border-color: rgba(239, 68, 68, 0.55);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+}
+
+.valueBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(100, 116, 139, 0.18);
+  background: rgba(248, 250, 252, 0.85);
+  color: #0F172A;
+}
+
+.passwordRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.error {
+  margin: 0;
+  font-size: 12px;
+  color: #EF4444;
+  font-weight: 700;
+}
+
+.cardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  border: 1px solid rgba(100, 116, 139, 0.18);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(248, 250, 252, 0.85);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardBadge {
+  font-size: 12px;
+  font-weight: 900;
+  color: #1E293B;
+  background: rgba(30, 41, 59, 0.10);
+  border: 1px solid rgba(30, 41, 59, 0.16);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardLine {
+  font-size: 14px;
+  color: #0F172A;
+}
+
+.cardSub {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.emptyState {
+  border: 1px dashed rgba(100, 116, 139, 0.32);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  background: rgba(248, 250, 252, 0.8);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-weight: 900;
+  color: #1E293B;
+}
+
+.emptyDesc {
+  margin: 6px 0 14px 0;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.primaryButton {
+  padding: 12px 14px;
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #0044A6;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ghostButton {
+  padding: 12px 14px;
+  background: transparent;
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  border-radius: 10px;
+  font-weight: 800;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.ghostButton:hover {
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+}
+
+.dangerButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  background: rgba(239, 68, 68, 0.10);
+  color: #B91C1C;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.dangerButton:hover {
+  background: rgba(239, 68, 68, 0.16);
+}
+
+/* MODAL */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 50;
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 520px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(100, 116, 139, 0.18);
+}
+
+.modalTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 16px;
+  color: #1E293B;
+}
+
+.iconButton {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  background: #FFFFFF;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.iconButton:hover {
+  box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.modalActions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .span2 {
+    grid-column: span 1;
+  }
+
+  /* ✅ Add Card modal responsive */
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Inline rows (value + action button) */
+.inlineRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inlineRow .valueBox {
+  flex: 1;
+  justify-content: space-between;
+}
+
+/* Make select look consistent with inputs */
+select.input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(100, 116, 139, 0.8) 50%),
+    linear-gradient(135deg, rgba(100, 116, 139, 0.8) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 18px, calc(100% - 12px) 18px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+/* Profile fetch error banner */
+.errorBanner {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.10);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #B91C1C;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 13px;
+}

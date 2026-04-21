@@ -1,0 +1,3 @@
+---
+k8s_namespace: ticketing-system
+kubeconfig_path: "~/.kube/config"

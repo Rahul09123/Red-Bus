@@ -1,0 +1,6 @@
+---
+k8s_namespace: ticketing-system
+prometheus_scrape_interval: 15s
+prometheus_retention_time: 30d
+grafana_admin_password: admin
+grafana_admin_user: admin

@@ -1,0 +1,97 @@
+/* src/components/AdminTopBar.css */
+
+.adminTopBar {
+  height: 64px;
+  width: 100%;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+
+  position: relative;
+  z-index: 10;
+}
+
+/* Brand */
+.adminTopBar .brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1E293B;
+  text-decoration: none;
+}
+
+.adminTopBar .brand span {
+  color: #DC2626;
+}
+
+/* Navigation */
+.adminTopBar .nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adminTopBar .navLink {
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+  text-decoration: none;
+
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.adminTopBar .navLink:hover {
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.adminTopBar .navLink.active {
+  background: rgba(220, 38, 38, 0.14);
+  color: #DC2626;
+}
+
+/* Logout */
+.adminTopBar .logoutBtn {
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  background: rgba(220, 38, 38, 0.08);
+  color: #DC2626;
+
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.adminTopBar .logoutBtn:hover {
+  background: rgba(220, 38, 38, 0.14);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .adminTopBar {
+    padding: 0 16px;
+  }
+
+  .adminTopBar .nav {
+    gap: 6px;
+  }
+
+  .adminTopBar .navLink,
+  .adminTopBar .logoutBtn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}

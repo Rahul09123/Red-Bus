@@ -1,0 +1,4 @@
+CREATE DATABASE "expeditionDB";
+CREATE DATABASE "memberDB";
+CREATE DATABASE "paymentDB";
+CREATE DATABASE "securityDB";

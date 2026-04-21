@@ -1,0 +1,12 @@
+---
+k8s_namespace: ticketing-system
+docker_registry: "localhost:5000"
+services:
+  - eureka-server
+  - api-gateway
+  - member-service
+  - security-service
+  - expedition-service
+  - payment-service
+  - frontend
+replica_count: 1

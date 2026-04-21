@@ -1,0 +1,9 @@
+---
+k8s_namespace: ticketing-system
+postgres_user: postgres
+postgres_password: "123"
+databases:
+  - expeditionDB
+  - memberDB
+  - securityDB
+  - paymentDB

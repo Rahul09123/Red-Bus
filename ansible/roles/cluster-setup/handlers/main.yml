@@ -1,0 +1,4 @@
+---
+- name: restart cluster
+  command: kubectl rollout restart deployment -n {{ k8s_namespace }} --all
+  changed_when: false

@@ -1,0 +1,130 @@
+.companyHome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/bus-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transform: scale(1.0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.companyHome {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.companyHome::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(240, 244, 248, 0.55)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.companyCard {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 720px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 28px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.18);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  color: #1E293B;
+}
+
+.title span {
+  color: #DC2626;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748B;
+}
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .actionsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.actionBox {
+  text-decoration: none;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  color: #1E293B;
+}
+
+.actionBox:hover {
+  transform: translateY(-2px);
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 16px 30px rgba(30, 41, 59, 0.12);
+}
+
+.actionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 8px;
+}
+
+.actionDesc {
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.actionCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #DC2626;
+  color: #FFFFFF;
+  font-weight: 600;
+  width: 100%;
+}
+
+.actionBox:hover .actionCta {
+  background: #0044A6;
+}

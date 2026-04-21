@@ -1,0 +1,62 @@
+---
+- name: Deploy PostgreSQL
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/postgres.yaml') | from_yaml_all | list }}"
+
+- name: Wait for PostgreSQL to be ready
+  kubernetes.core.k8s_info:
+    kind: Pod
+    namespace: "{{ k8s_namespace }}"
+    label_selectors:
+      - app=postgres
+  register: postgres_pods
+  until: 
+    - postgres_pods.resources | length > 0
+    - postgres_pods.resources[0].status.phase == "Running"
+  retries: 30
+  delay: 10
+
+- name: Deploy pgAdmin
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', '/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/pgadmin.yaml') | from_yaml_all | list }}"
+
+- name: Create database initialization job
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: db-init
+        namespace: "{{ k8s_namespace }}"
+      spec:
+        template:
+          spec:
+            containers:
+            - name: db-init
+              image: postgres:15
+              command:
+              - /bin/sh
+              - -c
+              - |
+                PGPASSWORD=123 psql -h postgres -U postgres -tc "
+                CREATE DATABASE IF NOT EXISTS expeditionDB;
+                CREATE DATABASE IF NOT EXISTS memberDB;
+                CREATE DATABASE IF NOT EXISTS securityDB;
+                CREATE DATABASE IF NOT EXISTS paymentDB;"
+            restartPolicy: Never
+        backoffLimit: 3
+
+- name: Verify database deployment
+  command: "kubectl get pods -n {{ k8s_namespace }} -l app=postgres"
+  changed_when: false
+  register: db_status
+
+- name: Display database status
+  debug:
+    msg: "{{ db_status.stdout }}"

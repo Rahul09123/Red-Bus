@@ -1,0 +1,156 @@
+# Generic
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.cache
+*.tmp
+*.temp
+*.pem
+*.key
+*.seed
+*.pid
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.class
+target/
+build/
+out/
+
+# .NET / Visual Studio
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+TestResults/
+*.nupkg
+packages/
+appsettings.*.json   # environment-specific settings if used
+
+# Go
+bin/
+*.exe
+*.test
+pkg/
+
+# Ruby
+*.gem
+*.bundle
+/.vendor/
+log/
+tmp/
+
+# PHP / Composer
+vendor/
+composer.lock
+
+# Docker
+**/docker-compose.override.yml
+docker-compose*.tmp
+
+# Kubernetes / Helm (local)
+*.kubeconfig
+*.tgz
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Editor swap / backup files
+*~ 
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Environment / secret files
+.env
+.env.*
+local.settings.json
+*.secret
+secrets.json
+credentials.json
+
+# Build / distribution
+dist/
+release/
+coverage/
+coverage-*.xml
+dist-ssr
+*.local
+
+# Logs and runtime data
+logs/
+*.log
+pids/
+*.pid
+tmp/
+temp/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Misc
+coverage/
+bower_components/
+.cache/
+.eslintcache
+*.db
+*.sqlite
+
+# Unused files
+*run.bat
+FlightInitializer.java
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

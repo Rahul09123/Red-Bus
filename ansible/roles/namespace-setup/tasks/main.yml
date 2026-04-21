@@ -1,0 +1,27 @@
+---
+- name: Create RedBus namespace
+  kubernetes.core.k8s:
+    name: "{{ k8s_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Label namespace
+  kubernetes.core.k8s:
+    name: "{{ k8s_namespace }}"
+    api_version: v1
+    kind: Namespace
+    definition:
+      metadata:
+        labels:
+          name: "{{ k8s_namespace }}"
+    state: present
+
+- name: Verify namespace creation
+  command: "kubectl get namespace {{ k8s_namespace }}"
+  changed_when: false
+  register: namespace_status
+
+- name: Display namespace info
+  debug:
+    msg: "{{ namespace_status.stdout }}"

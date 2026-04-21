@@ -1,0 +1,32 @@
+---
+- name: Verify Docker is installed
+  command: docker --version
+  changed_when: false
+  register: docker_version
+
+- name: Display Docker version
+  debug:
+    msg: "Docker version: {{ docker_version.stdout }}"
+
+- name: Verify Docker daemon is running
+  command: docker ps
+  changed_when: false
+  register: docker_status
+  failed_when: false
+
+- name: Start Docker daemon (macOS)
+  command: open -a Docker
+  when: 
+    - docker_status.rc != 0
+    - ansible_os_family == "Darwin"
+  changed_when: false
+
+- name: Wait for Docker daemon to be ready
+  pause:
+    seconds: 5
+  when: docker_status.rc != 0
+
+- name: Login to Docker Hub
+  command: "docker login -u {{ docker_hub_username }} -p {{ docker_hub_password }}"
+  changed_when: false
+  no_log: true

@@ -1,0 +1,106 @@
+/* src/pages/admin/CompanyConfirmPage.css */
+
+.companyConfirmPage {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.companyConfirmCard {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  color: #1E293B;
+}
+
+.subtitle {
+  margin: 6px 0 20px;
+  font-size: 14px;
+  color: #000000;
+}
+
+.info {
+  font-size: 14px;
+  color: #000000;
+}
+
+.error {
+  font-size: 14px;
+  color: #DC2626;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.table th{
+  background: #000000;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #000000;
+  font-size: 14px;
+}
+
+.approveBtn {
+  padding: 8px 14px;
+  background: #DC2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.approveBtn:hover {
+  background: #0044A6;
+}
+tbody td {
+  background: #000000;
+}
+.refreshBtn {
+  margin-top: 16px;
+  padding: 8px 14px;
+  background: #ffffff;
+  color: #DC2626;
+  border: 2px solid #DC2626;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.table th {
+  background: #F8FAFC; /* Siyah yerine çok açık gri */
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #E2E8F0; /* Siyah border yerine gri */
+  font-size: 14px;
+  color: #1E293B; /* Başlık rengi */
+}
+
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #E2E8F0;
+  font-size: 14px;
+  background: transparent; /* Arka planı temizle */
+}
+
+/* ÖNEMLİ: Mevcut dosyadaki şu bloğu tamamen SİL */
+/* tbody td { background: #000000; } */
+
+.textColor {
+  color: #334155; /* Yazı rengini koyu gri yap */
+}

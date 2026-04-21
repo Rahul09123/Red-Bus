@@ -1,0 +1,183 @@
+/* AdminHomePage.css */
+.adminHome::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/bus-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.9;
+    filter: blur(0px);
+    transform: scale(1.0);
+
+    z-index: 0;
+    pointer-events: none;
+    /* ✅ BUNU EKLE */
+}
+
+.adminHome {
+  min-height: calc(100vh - 64px);
+  width: 100vw;
+  background: #F8F9FA;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  position: relative;   /* <-- şart */
+  overflow-x: hidden;
+}
+
+.adminHome::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(180deg,
+            rgba(220, 38, 38, 0.08),
+            rgba(240, 244, 248, 0.55));
+
+    z-index: 1;
+    pointer-events: none;
+    /* ✅ BUNU EKLE */
+}
+
+.content {
+    min-height: calc(100vh - 64px);
+    /* üst bar (AdminTopBar) varsa */
+    display: grid;
+    place-items: start center;
+    padding: 28px 24px;
+    box-sizing: border-box;
+
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: 100%;
+    max-width: 920px;
+
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 26px;
+    box-sizing: border-box;
+
+    box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+}
+
+.hero {
+    margin-bottom: 18px;
+}
+
+.title {
+    margin: 0;
+    font-size: 26px;
+    color: #1E293B;
+}
+
+.subtitle {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #64748B;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.quickGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.quickCard {
+    text-align: left;
+    background: #FFFFFF;
+    border: 1px solid rgba(100, 116, 139, 0.18);
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+.quickCard:hover {
+    border-color: rgba(220, 38, 38, 0.38);
+    box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+}
+
+.quickCard:active {
+    transform: translateY(1px);
+}
+
+.quickTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.quickTitle {
+    font-weight: 800;
+    color: #1E293B;
+    font-size: 14px;
+}
+
+.pill {
+    font-size: 12px;
+    font-weight: 800;
+    color: #DC2626;
+    background: rgba(220, 38, 38, 0.10);
+    border: 1px solid rgba(220, 38, 38, 0.18);
+    padding: 6px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.quickDesc {
+    margin: 0;
+    color: #64748B;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.hintBox {
+    margin-top: 16px;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: rgba(220, 38, 38, 0.06);
+    border: 1px solid rgba(220, 38, 38, 0.14);
+}
+
+.hintTitle {
+    font-weight: 800;
+    font-size: 13px;
+    color: #1E293B;
+    margin-bottom: 6px;
+}
+
+.hintText {
+    color: #64748B;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .quickGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .card {
+        padding: 20px;
+    }
+}

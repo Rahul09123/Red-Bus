@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: redbus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+      - name: pgadmin
+        image: dpage/pgadmin4:8.12
+        ports:
+        - containerPort: 80
+        env:
+        - name: PGADMIN_DEFAULT_EMAIL
+          value: admin@example.com
+        - name: PGADMIN_DEFAULT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redbus-secrets
+              key: DB_PASSWORD
+        - name: SCRIPT_NAME
+          value: /pgadmin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  namespace: redbus
+spec:
+  selector:
+    app: pgadmin
+  ports:
+  - protocol: TCP
+    port: 5051
+    targetPort: 80
+  type: ClusterIP

@@ -1,0 +1,60 @@
+---
+- name: Check if Vault is installed
+  command: vault version
+  changed_when: false
+  failed_when: false
+  register: vault_check
+
+- name: Create Vault secrets
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: redbus-secrets
+        namespace: "{{ k8s_namespace }}"
+      type: Opaque
+      data:
+        POSTGRES_PASSWORD: "{{ 'your_db_password' | b64encode }}"
+        ADMIN_PASSWORD: "{{ 'SecurePassword123!' | b64encode }}"
+        DOCKER_HUB_PASSWORD: "{{ docker_hub_password | b64encode }}"
+        JWT_SECRET: "{{ 'your_jwt_secret_key_here' | b64encode }}"
+        ENCRYPTION_KEY: "{{ 'your_encryption_key_here' | b64encode }}"
+
+- name: Create Docker Registry Secret
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: docker-credentials
+        namespace: "{{ k8s_namespace }}"
+      type: kubernetes.io/dockercfg
+      data:
+        .dockercfg: "{{ lookup('file', '/root/.docker/config.json') | b64encode }}"
+
+- name: Create ELK Stack secrets
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: elk-credentials
+        namespace: "{{ k8s_namespace }}"
+      type: Opaque
+      data:
+        ELASTIC_PASSWORD: "{{ 'elastic123' | b64encode }}"
+        KIBANA_PASSWORD: "{{ 'kibana123' | b64encode }}"
+        LOGSTASH_PASSWORD: "{{ 'logstash123' | b64encode }}"
+
+- name: Verify secrets creation
+  command: "kubectl get secrets -n {{ k8s_namespace }}"
+  changed_when: false
+  register: secrets_list
+
+- name: Display secrets
+  debug:
+    msg: "{{ secrets_list.stdout }}"

@@ -1,0 +1,39 @@
+---
+- name: Delete entire Kubernetes namespace
+  kubernetes.core.k8s:
+    name: "{{ k8s_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: absent
+  when: cleanup_namespace | default(false)
+
+- name: Remove Kubernetes resources
+  kubernetes.core.k8s:
+    state: absent
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('file', item) | from_yaml_all | list }}"
+  loop:
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/postgres.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/pgadmin.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/eureka-server.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/api-gateway.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/member-service.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/security-service.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/expedition-service.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/payment-service.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/frontend.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/prometheus.yaml"
+    - "/Users/rahulraman/Desktop/Tickting-System-Docker/k8s/grafana.yaml"
+  when: not cleanup_namespace | default(false)
+  ignore_errors: true
+
+- name: Verify cleanup
+  command: "kubectl get pods -n {{ k8s_namespace }}"
+  changed_when: false
+  register: cleanup_status
+  when: not cleanup_namespace | default(false)
+
+- name: Display cleanup status
+  debug:
+    msg: "{{ cleanup_status.stdout }}"
+  when: not cleanup_namespace | default(false)

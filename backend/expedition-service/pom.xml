@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.shubilet</groupId>
+    <artifactId>expedition-service</artifactId>
+    <version>1.0</version>
+    <name>shubilet-expedition-service</name>
+    <description>
+        RedBus Expedition Service that manages expeditions, routes, cities,
+        scheduling, and seat availability for reservation workflows.
+    </description>
+    <url>https://github.com/MrMirliva/shubilet</url>
+
+    <developers>
+        <developer>
+            <id>Mirliva</id>
+            <name>Abdullah Gündüz</name>
+            <url>https://github.com/MrMirliva</url>
+            <roles>
+                <role>Team Lead</role>
+                <role>System Design</role>
+                <role>Backend Developer</role>
+                <role>Frontend Developer</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>Fixie</id>
+            <name>Murat Furkan Şen</name>
+            <url>https://github.com/MuratFurkanSen</url>
+            <roles>
+                <role>System Design</role>
+                <role>Backend Developer</role>
+                <role>Frontend Developer</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>omertahsintaskin</id>
+            <name>Ömer Tahsin Taşkın</name>
+            <url>https://github.com/omertahsintaskin</url>
+            <roles>
+                <role>Backend Developer</role>
+                <role>UI/UX</role>
+                <role>Frontend Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/MrMirliva/shubilet.git</connection>
+        <developerConnection>scm:git:ssh://github.com/MrMirliva/shubilet.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/MrMirliva/shubilet</url>
+    </scm>
+
+    <properties>
+        <java.version>21</java.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Web Layer -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Eureka Client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- PostgreSQL Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Data JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- DevTools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

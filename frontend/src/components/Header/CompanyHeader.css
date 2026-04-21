@@ -1,0 +1,59 @@
+.headerBar {
+  height: 64px;
+  width: 100%;
+  background: #E5E5E5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerBrandLink {
+  text-decoration: none;
+}
+
+.headerBrand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.headerBrand span {
+  color: #DC2626;
+}
+
+.headerNav {
+  display: flex;
+  gap: 16px;
+}
+
+.headerLink {
+  background: #E0E7FF;
+  color: #DC2626;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.headerLink:hover {
+  background: #C7D2FE;
+}
+
+.headerLink.active {
+  background: #DC2626;
+  color: #FFFFFF;
+}
