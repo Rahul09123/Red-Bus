@@ -6,6 +6,10 @@ pipeline {
         PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
     }
     
+    triggers {
+        githubPush()
+    }
+    
     stages {
         stage('Clone Repository') {
             steps {
@@ -39,6 +43,7 @@ pipeline {
                     sh '''
                         kubectl apply -f k8s/namespace.yaml
                         kubectl apply -f k8s/configmap.yaml
+                        kubectl delete secret docker-credentials -n redbus --ignore-not-found
                         kubectl apply -f k8s/secrets.yaml
                         kubectl apply -f k8s/postgres.yaml
                         kubectl apply -f k8s/pgadmin.yaml
