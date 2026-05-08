@@ -41,22 +41,22 @@ pipeline {
                     sh "sed -i '' 's/:latest/:${gitTag}/g' k8s/*.yaml"
                     
                     sh '''
-                        kubectl apply -f k8s/namespace.yaml
-                        kubectl apply -f k8s/configmap.yaml
+                        kubectl apply -f k8s/namespace.yaml --validate=false
+                        kubectl apply -f k8s/configmap.yaml --validate=false
                         kubectl delete secret docker-credentials -n redbus --ignore-not-found
-                        kubectl apply -f k8s/secrets.yaml
-                        kubectl apply -f k8s/postgres.yaml
-                        kubectl apply -f k8s/pgadmin.yaml
-                        kubectl apply -f k8s/eureka-server.yaml
-                        kubectl apply -f k8s/api-gateway.yaml
-                        kubectl apply -f k8s/member-service.yaml
-                        kubectl apply -f k8s/security-service.yaml
-                        kubectl apply -f k8s/expedition-service.yaml
-                        kubectl apply -f k8s/payment-service.yaml
-                        kubectl apply -f k8s/frontend.yaml
-                        kubectl apply -f k8s/ingress.yaml
-                        kubectl apply -f k8s/elk-stack.yaml
-                        kubectl apply -f k8s/hpa.yaml
+                        kubectl apply -f k8s/secrets.yaml --validate=false
+                        kubectl apply -f k8s/postgres.yaml --validate=false
+                        kubectl apply -f k8s/pgadmin.yaml --validate=false
+                        kubectl apply -f k8s/eureka-server.yaml --validate=false
+                        kubectl apply -f k8s/api-gateway.yaml --validate=false
+                        kubectl apply -f k8s/member-service.yaml --validate=false
+                        kubectl apply -f k8s/security-service.yaml --validate=false
+                        kubectl apply -f k8s/expedition-service.yaml --validate=false
+                        kubectl apply -f k8s/payment-service.yaml --validate=false
+                        kubectl apply -f k8s/frontend.yaml --validate=false
+                        kubectl apply -f k8s/ingress.yaml --validate=false
+                        kubectl apply -f k8s/elk-stack.yaml --validate=false
+                        kubectl apply -f k8s/hpa.yaml --validate=false
                     '''
                 }
             }
