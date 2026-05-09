@@ -47,7 +47,7 @@ spec:
             - /bin/sh
             - -c
             - pg_isready -U postgres
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
           periodSeconds: 10
         readinessProbe:
           exec:
@@ -55,7 +55,7 @@ spec:
             - /bin/sh
             - -c
             - pg_isready -U postgres
-          initialDelaySeconds: 5
+          initialDelaySeconds: 120
           periodSeconds: 10
       volumes:
       - name: postgres-storage

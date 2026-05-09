@@ -16,7 +16,7 @@ spec:
       containers:
       - name: eureka-server
         image: rahulraman/redbus-eureka-server:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8761
         env:
@@ -26,13 +26,13 @@ spec:
           httpGet:
             path: /eureka/
             port: 8761
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /eureka/
             port: 8761
-          initialDelaySeconds: 20
+          initialDelaySeconds: 120
           periodSeconds: 5
         resources:
           requests:
