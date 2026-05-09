@@ -47,7 +47,7 @@ export default function AdminConfirmPage() {
 
   const handleVerify = async (adminId) => {
     try {
-      const res = await fetch("http://localhost:3000/api/verification/verify/admin", {
+      const res = await fetch("/api/verification/verify/admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
