@@ -4,7 +4,9 @@ metadata:
   name: security-service
   namespace: redbus
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: security-service
@@ -41,18 +43,27 @@ spec:
               key: EUREKA_SERVER
         - name: LOGGING_LEVEL_ROOT
           value: "INFO"
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
+        startupProbe:
+          tcpSocket:
             port: 8084
-          initialDelaySeconds: 120
+          initialDelaySeconds: 30
           periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 60
+        livenessProbe:
+          tcpSocket:
+            port: 8084
+          initialDelaySeconds: 180
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
         readinessProbe:
-          httpGet:
-            path: /actuator/health
+          tcpSocket:
             port: 8084
           initialDelaySeconds: 120
           periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 6
         resources:
           requests:
             cpu: 250m

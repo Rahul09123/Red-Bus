@@ -5,6 +5,8 @@ metadata:
   namespace: redbus
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: eureka-server
@@ -22,18 +24,30 @@ spec:
         env:
         - name: SPRING_APPLICATION_NAME
           value: eureka-server
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 60
         livenessProbe:
           httpGet:
-            path: /eureka/
+            path: /actuator/health
             port: 8761
-          initialDelaySeconds: 120
+          initialDelaySeconds: 180
           periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
         readinessProbe:
           httpGet:
-            path: /eureka/
+            path: /actuator/health
             port: 8761
           initialDelaySeconds: 120
           periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 6
         resources:
           requests:
             cpu: 250m
