@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        DOCKER_HUB_USERNAME = 'rahulraman'
+        DOCKER_HUB_USERNAME = 'rahul0129'
         SERVICE_NAME = 'frontend'
         GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
         PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"

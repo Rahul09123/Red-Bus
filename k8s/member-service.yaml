@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: member-service
-        image: rahulraman/redbus-member-service:latest
+        image: rahul0129/redbus-member-service:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081

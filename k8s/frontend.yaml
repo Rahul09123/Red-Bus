@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: rahulraman/redbus-frontend:latest
+        image: rahul0129/redbus-frontend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
