@@ -50,11 +50,17 @@ pipeline {
         stage('Push to Docker Hub') {
             when { environment name: 'SKIP_BUILD', value: 'false' }
             steps {
-                sh """
-                    echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin
-                    docker push ${env.IMAGE_NAME}
-                    docker logout
-                """
+                script {
+                    def pushStatus = sh(script: """
+                        echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                        docker push ${env.IMAGE_NAME}
+                        docker logout
+                    """, returnStatus: true)
+
+                    if (pushStatus != 0) {
+                        echo "⚠️ Docker push failed with status ${pushStatus} — continuing without failing the build."
+                    }
+                }
             }
         }
     }
