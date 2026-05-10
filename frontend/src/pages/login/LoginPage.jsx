@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
@@ -58,7 +58,8 @@ export default function LoginPage() {
     setServerError("");
 
     try {
-      const response = await fetch("/api/auth/login", {
+      // Step 1: Validate credentials via member-service
+      const credResponse = await fetch("/api/auth/checkCredentials", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -68,11 +69,37 @@ export default function LoginPage() {
         }),
       });
 
-      const data = await safeReadMessageDTO(response);
-      const backendMessage = data?.message;
+      const credData = await safeReadMessageDTO(credResponse);
 
-      if (!response.ok) {
-        setServerError(backendMessage || "");
+      if (!credResponse.ok) {
+        setServerError(credData?.message || "Invalid email or password.");
+        return;
+      }
+
+      const { userId, userType } = credData;
+
+      if (!userId || !userType) {
+        setServerError("Invalid credentials.");
+        return;
+      }
+
+      // Step 2: Create session via security-service
+      const sessionResponse = await fetch("/api/auth/createSession", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          cookie: {},
+          userId: userId,
+          userType: userType,
+        }),
+      });
+
+      const sessionData = await safeReadMessageDTO(sessionResponse);
+      const backendMessage = sessionData?.message;
+
+      if (!sessionResponse.ok) {
+        setServerError(backendMessage || "Login failed. Please try again.");
         return;
       }
 
