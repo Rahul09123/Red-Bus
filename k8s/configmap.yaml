@@ -8,7 +8,7 @@ data:
   POSTGRES_HOST: postgres
   POSTGRES_PORT: "5432"
   POSTGRES_USER: postgres
-  API_GATEWAY_URL: http://api-gateway:8080
+  API_GATEWAY_URL: http://api-gateway:9090
   MEMBER_SERVICE_URL: http://member-service:8081
   SECURITY_SERVICE_URL: http://security-service:8084
   EXPEDITION_SERVICE_URL: http://expedition-service:8082

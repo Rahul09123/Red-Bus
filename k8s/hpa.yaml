@@ -9,17 +9,11 @@ spec:
     kind: Deployment
     name: api-gateway
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
       target:
         type: Utilization
         averageUtilization: 80
@@ -35,14 +29,14 @@ spec:
     kind: Deployment
     name: member-service
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -55,14 +49,14 @@ spec:
     kind: Deployment
     name: expedition-service
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -75,14 +69,14 @@ spec:
     kind: Deployment
     name: security-service
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -95,14 +89,14 @@ spec:
     kind: Deployment
     name: payment-service
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -115,11 +109,11 @@ spec:
     kind: Deployment
     name: frontend
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 75
+        averageUtilization: 80
