@@ -4,6 +4,7 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/Rahul09123/Red-Bus.git'
         PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
     }
     
     triggers {
@@ -40,10 +41,15 @@ pipeline {
                     // Replace :latest with :hash in all k8s files
                     sh "sed -i '' 's/:latest/:${gitTag}/g' k8s/*.yaml"
                     
-                    sh '''
+                    sh """
                         kubectl apply -f k8s/namespace.yaml --validate=false
                         kubectl apply -f k8s/configmap.yaml --validate=false
                         kubectl delete secret docker-credentials -n redbus --ignore-not-found
+                        kubectl create secret docker-registry docker-credentials -n redbus \\
+                            --docker-server=https://index.docker.io/v1/ \\
+                            --docker-username=\$DOCKER_HUB_CREDENTIALS_USR \\
+                            --docker-password=\$DOCKER_HUB_CREDENTIALS_PSW \\
+                            --docker-email=redbus@example.com
                         kubectl apply -f k8s/secrets.yaml --validate=false
                         kubectl apply -f k8s/postgres.yaml --validate=false
                         kubectl apply -f k8s/pgadmin.yaml --validate=false
@@ -57,7 +63,7 @@ pipeline {
                         kubectl apply -f k8s/ingress.yaml --validate=false
                         kubectl apply -f k8s/elk-stack.yaml --validate=false
                         kubectl apply -f k8s/hpa.yaml --validate=false
-                    '''
+                    """
                 }
             }
         }
