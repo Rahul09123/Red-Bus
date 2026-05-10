@@ -13,7 +13,6 @@ import java.io.IOException;
 public class RestTemplateConfig {
 
     @Bean
-    @LoadBalanced
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
 

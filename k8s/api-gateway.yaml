@@ -18,7 +18,7 @@ spec:
       containers:
       - name: api-gateway
         image: rahul0129/redbus-api-gateway:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
