@@ -58,8 +58,7 @@ export default function LoginPage() {
     setServerError("");
 
     try {
-      // Step 1: Validate credentials via member-service
-      const credResponse = await fetch("/api/auth/checkCredentials", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -69,37 +68,11 @@ export default function LoginPage() {
         }),
       });
 
-      const credData = await safeReadMessageDTO(credResponse);
+      const data = await safeReadMessageDTO(response);
+      const backendMessage = data?.message;
 
-      if (!credResponse.ok) {
-        setServerError(credData?.message || "Invalid email or password.");
-        return;
-      }
-
-      const { userId, userType } = credData;
-
-      if (!userId || !userType) {
-        setServerError("Invalid credentials.");
-        return;
-      }
-
-      // Step 2: Create session via security-service
-      const sessionResponse = await fetch("/api/auth/createSession", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          cookie: {},
-          userId: userId,
-          userType: userType,
-        }),
-      });
-
-      const sessionData = await safeReadMessageDTO(sessionResponse);
-      const backendMessage = sessionData?.message;
-
-      if (!sessionResponse.ok) {
-        setServerError(backendMessage || "Login failed. Please try again.");
+      if (!response.ok) {
+        setServerError(backendMessage || "");
         return;
       }
 
