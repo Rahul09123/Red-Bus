@@ -244,8 +244,5 @@ data:
       processors:
         - add_kubernetes_metadata:
             host: ${NODE_NAME}
-            matchers:
-            - logs_path:
-                logs_path: "/var/log/pods/"
     output.logstash:
       hosts: ["logstash:5044"]
