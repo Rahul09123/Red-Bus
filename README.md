@@ -95,7 +95,7 @@ kubectl apply -f k8s/api-gateway.yaml
 ---
 
 ## 👨‍💻 Authors
-- **Rahul Raman** - *Lead DevOps & Full Stack Developer*
+- **Rahul Raman  Affan Shaikh**
 
 ---
 > **Note**: This project was developed as a Final Project showcase for production-grade microservice orchestration.
