@@ -509,7 +509,7 @@ export default function ProfilePage() {
         <header className="profileHeader">
           <div>
             <h1 className="title">My Profile</h1>
-            <p className="subtitle">Manage your account information and saved cards</p>
+            <p className="subtitle">Manage your account information</p>
 
             {profileError ? (
               <div className="errorBanner" role="alert">
@@ -585,65 +585,6 @@ export default function ProfilePage() {
           </div>
         </section>
 
-        {/* CARDS CARD */}
-        <section className="card">
-          <div className="cardTop">
-            <div className="cardTitleWrap">
-              <h2 className="cardTitle">Saved Cards</h2>
-              <span className="pill">Payment</span>
-            </div>
-
-            <button className="primaryButton" type="button" onClick={openAddCardModal} disabled={isCardsLoading}>
-              Add Card
-            </button>
-          </div>
-
-          {cardsError ? (
-            <div className="errorBanner" role="alert">
-              <div>{cardsError}</div>
-              <button className="ghostButton" type="button" onClick={() => window.location.reload()}>
-                Retry
-              </button>
-            </div>
-          ) : isCardsLoading ? (
-            <div className="emptyState">
-              <p className="emptyTitle">Loading cards...</p>
-              <p className="emptyDesc">Please wait.</p>
-            </div>
-          ) : cards.length === 0 ? (
-            <div className="emptyState">
-              <p className="emptyTitle">No saved cards</p>
-              <p className="emptyDesc">You don't have any saved cards yet.</p>
-            </div>
-          ) : (
-            <div className="cardsList">
-              {cards.map((c) => (
-                <div key={c.cardId} className="cardRow">
-                  <div className="cardMeta">
-                    <div className="cardBadge">CARD</div>
-                    <div className="cardInfo">
-                      <div className="cardLine">
-                        <b>{maskCardNo(c.cardNo)}</b>
-                      </div>
-                      <div className="cardSub">
-                        {c.name} {c.surname}
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    className="dangerButton"
-                    type="button"
-                    onClick={() => onRemoveCard(c.cardId)}
-                    aria-label={`Remove card id ${c.cardId}`}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
       </div>
 
       {/* FIELD MODAL (NAME/SURNAME/GENDER/EMAIL/PASSWORD) */}
@@ -734,70 +675,6 @@ export default function ProfilePage() {
         </Modal>
       ) : null}
 
-      {/* ADD CARD MODAL */}
-      {isAddCardOpen ? (
-        <Modal title="Add Card" onClose={closeAddCardModal}>
-          <div className="modalBody">
-            <ModalField
-              label="Card Holder Name"
-              value={cardForm.cardHolderName}
-              error={cardTouched.cardHolderName ? cardErrors.cardHolderName : ""}
-              onBlur={() => setCardTouched((t) => ({ ...t, cardHolderName: true }))}
-              onChange={(v) => setCardForm((p) => ({ ...p, cardHolderName: v }))}
-              disabled={isAddingCard}
-            />
-
-            <ModalField
-              label="Card Number"
-              value={cardForm.cardNumber}
-              error={cardTouched.cardNumber ? cardErrors.cardNumber : ""}
-              onBlur={() => setCardTouched((t) => ({ ...t, cardNumber: true }))}
-              onChange={(v) => setCardForm((p) => ({ ...p, cardNumber: v }))}
-              placeholder="16 digits"
-              disabled={isAddingCard}
-            />
-
-            <div className="grid2">
-              <ModalField
-                label="Exp. Month (MM)"
-                value={cardForm.expirationMonth}
-                error={cardTouched.expirationMonth ? cardErrors.expirationMonth : ""}
-                onBlur={() => setCardTouched((t) => ({ ...t, expirationMonth: true }))}
-                onChange={(v) => setCardForm((p) => ({ ...p, expirationMonth: v }))}
-                placeholder="01-12"
-                disabled={isAddingCard}
-              />
-              <ModalField
-                label="Exp. Year (YY)"
-                value={cardForm.expirationYear}
-                error={cardTouched.expirationYear ? cardErrors.expirationYear : ""}
-                onBlur={() => setCardTouched((t) => ({ ...t, expirationYear: true }))}
-                onChange={(v) => setCardForm((p) => ({ ...p, expirationYear: v }))}
-                placeholder="25"
-                disabled={isAddingCard}
-              />
-            </div>
-
-            <ModalField
-              label="CVC"
-              value={cardForm.cvc}
-              error={cardTouched.cvc ? cardErrors.cvc : ""}
-              onBlur={() => setCardTouched((t) => ({ ...t, cvc: true }))}
-              onChange={(v) => setCardForm((p) => ({ ...p, cvc: v }))}
-              placeholder="3 digits"
-              disabled={isAddingCard}
-            />
-          </div>
-
-          <div className="modalActions">
-            <button className="primaryButton" type="button" onClick={onAddCardSubmit} disabled={!canAddCard}>
-              {isAddingCard ? "Saving..." : "Save"}
-            </button>
-            <button className="ghostButton" type="button" onClick={closeAddCardModal} disabled={isAddingCard}>
-              Cancel
-            </button>
-          </div>
-        </Modal>
       ) : null}
     </div>
   );
