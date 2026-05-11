@@ -235,15 +235,16 @@ metadata:
   namespace: redbus
 data:
   filebeat.yml: |-
-    filebeat.autodiscover:
-      providers:
-        - type: kubernetes
-          node: ${NODE_NAME}
-          hints.enabled: true
-          hints.default_config:
-            type: container
-            paths:
-              - /var/log/pods/${data.kubernetes.pod.uid}/${data.kubernetes.container.name}/*.log
+    filebeat.inputs:
+    - type: container
+      paths:
+        - /var/log/pods/*/*/*.log
+      processors:
+        - add_kubernetes_metadata:
+            host: ${NODE_NAME}
+            matchers:
+            - logs_path:
+                logs_path: "/var/log/pods/"
 
     output.logstash:
       hosts: ["logstash:5044"]
