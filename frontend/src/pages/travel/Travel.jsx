@@ -8,12 +8,14 @@ const CITIES = [
     "Delhi",
     "Bangalore",
     "Hyderabad",
+    "Ahmedabad",
     "Chennai",
     "Kolkata",
+    "Surat",
     "Pune",
-    "Ahmedabad",
     "Jaipur",
-    "Surat"
+    "Lucknow",
+    "Kanpur"
 ];
 
 // Mocks removed
