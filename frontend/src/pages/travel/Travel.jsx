@@ -197,10 +197,10 @@ export default function Travel() {
 
     const handleProceedToCheckout = () => {
         if (!selectedSeat || !expandedExpeditionId) return;
-        setShowPaymentModal(true);
+        handleBookTicket(0); // Call direct booking with dummy cardId
     };
 
-    const handlePayWithCard = async (cardId) => {
+    const handleBookTicket = async (cardId) => {
         setIsProcessingPayment(true);
         try {
             const response = await fetch("/api/ticket/buy", {
@@ -218,26 +218,19 @@ export default function Travel() {
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.message || "Payment failed. Please try again.");
+                alert(data.message || "Booking failed. Please try again.");
                 setIsProcessingPayment(false);
                 return;
             }
 
             // Success
-            // We hold ticketInternalDTO in console or state for future use as requested
             console.log("Ticket Created:", data.ticketInternalDTO);
+            alert(data.message || "Booking Successful! Your ticket has been reserved.");
 
-            alert(data.message || "Payment Successful! Your ticket has been booked.");
-
-            setShowPaymentModal(false);
             setExpandedExpeditionId(null); // Close expansion and reset view
-
-            // Optional: Refresh search to update seat availability if user searches again
-            // fetchExpeditions(); 
-
         } catch (error) {
-            console.error("Payment error:", error);
-            alert("An error occurred during payment.");
+            console.error("Booking error:", error);
+            alert("An error occurred during booking.");
         } finally {
             setIsProcessingPayment(false);
         }
@@ -468,10 +461,10 @@ export default function Travel() {
                                                         </div>
                                                         <button
                                                             className="confirmBtn"
-                                                            disabled={!selectedSeat}
+                                                            disabled={!selectedSeat || isProcessingPayment}
                                                             onClick={handleProceedToCheckout}
                                                         >
-                                                            Proceed to Checkout
+                                                            {isProcessingPayment ? "Booking..." : "Confirm Booking"}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -489,41 +482,6 @@ export default function Travel() {
                 </div>
             </div>
 
-            {/* PAYMENT MODAL */}
-            {showPaymentModal && (
-                <div className="modalOverlay">
-                    <div className="modalCard">
-                        <div className="modalHeader">
-                            <h3>Select Payment Method</h3>
-                            <button className="closeModalBtn" onClick={() => setShowPaymentModal(false)}>✕</button>
-                        </div>
-                        <div className="modalBody">
-                            <p className="modalSubtitle">Choose a saved card to complete your purchase for <span style={{ fontWeight: 'bold', color: '#DC2626' }}>Seat {selectedSeat}</span></p>
-
-                            {isCardsLoading ? (
-                                <div className="seatsLoading">Loading cards...</div>
-                            ) : savedCards.length === 0 ? (
-                                <div className="emptyBox">No saved cards found.</div>
-                            ) : (
-                                <div className="savedCardsList">
-                                    {savedCards.map(card => (
-                                        <div key={card.cardId} className="savedCardItem" onClick={() => handlePayWithCard(card.cardId)}>
-                                            <div className="cardIcon">💳</div>
-                                            <div className="cardDetails">
-                                                <div className="cardNumber">**** **** **** {card.cardNo}</div>
-                                                <div className="cardExpiry">Expires {card.expirationMonth}/{card.expirationYear}</div>
-                                            </div>
-                                            <button className="payNowBtn" disabled={isProcessingPayment}>
-                                                {isProcessingPayment ? "Processing..." : "Pay"}
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 }

@@ -162,10 +162,7 @@ public class ReservationControllerImpl implements RezervationController {
             return errorUtils.isInvalidFormat(String.valueOf(seatNo));
         }
 
-        if(cardId <= 0) {
-            logger.error("Invalid Card ID: {}", cardId);
-            return errorUtils.isInvalidFormat(String.valueOf(cardId));
-        }
+        /* cardId check removed for demo */
         //STEP 2: Spesific validation
 
         if(!expeditionService.expeditionExists(expeditionId)) {
@@ -216,114 +213,10 @@ public class ReservationControllerImpl implements RezervationController {
             return errorUtils.criticalError();
         }
 
-        // START: Payment Service communication - Card Active Check
-        String requestId = UUID.randomUUID().toString();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Request-Id", requestId);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<CardIdDTORequest> cardRequest = new HttpEntity<>(new CardIdDTORequest(cardId), headers);
-
-        boolean isCardActive;
-
-        try {
-            // IMPORTANT: Boolean.class not String.class
-            ResponseEntity<String> cardResponse = restTemplate.exchange(
-                ServiceURLs.PAYMENT_SERVICE_CHECK_ACTIVATE,
-                HttpMethod.POST,
-                cardRequest,
-                String.class
-            );
-
-            // If 2xx, body will be "true"/"false" (JSON boolean converted to string)
-            if (!cardResponse.getStatusCode().is2xxSuccessful()) {
-                // Normally won't reach here (RestTemplate throws exception on 4xx),
-                // but still safe to check.
-                return errorUtils.criticalError();
-            }
-
-            String body = cardResponse.getBody(); // "true" veya "false"
-            isCardActive = Boolean.parseBoolean(body);
-
-        } catch (HttpStatusCodeException ex) {
-            // Falls here when 4xx/5xx occurs and body is usually {"message":"..."}
-            String errorBody = ex.getResponseBodyAsString();
-
-            // Here you have two options:
-            // A) Directly consider "card not active" and proceed
-            // B) Parse the message from the body and return it to the user
-
-            // Simple and robust:
-            logger.error("Card active check failed. status={}, body={}", ex.getStatusCode(), errorBody);
-            return errorUtils.cardNotActive();
-
-        } catch (Exception ex) {
-            logger.error("Card active check unexpected error", ex);
-            return errorUtils.criticalError();
-        }
-
-        if (!isCardActive) {
-            logger.error("Card is not active. Card ID: {}", cardId);
-            return errorUtils.cardNotActive();
-        }
-
-        logger.info("Card is active. Card ID: {}", cardId);
-
-        // END: Payment Service communication - Card Active Check
-
-        //STEP 3: Logical processing
-        int amount = expeditionService.getExpeditionPrice(expeditionId);
-
-        //START: Payment Service communication - Make Payment
-        HttpEntity<TicketPaymentRequestDTO> paymentRequest = new HttpEntity<>(
-            new TicketPaymentRequestDTO(cardId, String.valueOf(amount), customerId),
-            headers
-        );
-
-        int paymentId;
-
-        try {
-            ResponseEntity<TicketPaymentResponseDTO> paymentResponse = restTemplate.exchange(
-                ServiceURLs.PAYMENT_SERVICE_MAKE_PAYMENT,
-                HttpMethod.POST,
-                paymentRequest,
-                TicketPaymentResponseDTO.class
-            );
-
-            if (!paymentResponse.getStatusCode().is2xxSuccessful()) {
-                logger.error("Payment failed (non-2xx). Expedition ID: {}, Customer ID: {}, Seat No: {}, Status: {}",
-                    expeditionId, customerId, seatNo, paymentResponse.getStatusCode());
-                return errorUtils.criticalError();
-            }
-
-            TicketPaymentResponseDTO body = paymentResponse.getBody();
-            if (body == null) {
-                logger.error("Payment response body is null. Expedition ID: {}, Customer ID: {}, Seat No: {}",
-                    expeditionId, customerId, seatNo);
-                return errorUtils.criticalError();
-            }
-
-            paymentId = body.getPaymentId();
-            if (paymentId <= 0) {
-                logger.error("PaymentId is missing/invalid. Expedition ID: {}, Customer ID: {}, Seat No: {}, paymentId: {}",
-                    expeditionId, customerId, seatNo, paymentId);
-                return errorUtils.criticalError();
-            }
-
-            logger.info("Payment successful. Payment ID: {}, Expedition ID: {}, Customer ID: {}, Seat No: {}",
-                paymentId, expeditionId, customerId, seatNo
-            );
-        }catch (HttpStatusCodeException ex) {
-            logger.error("Payment failed. Expedition ID: {}, Customer ID: {}, Seat No: {}, Status: {}, Body: {}",
-                expeditionId, customerId, seatNo, ex.getStatusCode(), ex.getResponseBodyAsString());
-
-            ResponseEntity<Object> dummy = ResponseEntity.status(ex.getStatusCode()).build();
-            return errorUtils.customError(dummy, "Payment failed");
-        } catch (Exception ex) {
-            logger.error("Payment unexpected error", ex);
-            return errorUtils.criticalError();
-        }
-        //END: Payment Service communication - Make Payment
+        // START: PAYMENT BYPASSED FOR DEMO
+        logger.info("Skipping card check and payment for demo. Expedition ID: {}, Seat No: {}", expeditionId, seatNo);
+        int paymentId = 999; 
+        // END: PAYMENT BYPASSED
         
         int seatId = seatService.bookSeat(expeditionId, customerId, seatNo);
         if(seatId == -1) {
