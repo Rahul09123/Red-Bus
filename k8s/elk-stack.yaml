@@ -118,6 +118,47 @@ spec:
     targetPort: 5601
     nodePort: 30601
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: redbus
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: filebeat
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - nodes/proxy
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions"]
+  resources:
+  - ingresses
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources:
+  - ingresses
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+subjects:
+- kind: ServiceAccount
+  name: filebeat
+  namespace: redbus
+roleRef:
+  kind: ClusterRole
+  name: filebeat
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -132,6 +173,10 @@ spec:
       labels:
         app: filebeat
     spec:
+      serviceAccountName: filebeat
+      terminationGracePeriodSeconds: 30
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: filebeat
         image: docker.elastic.co/beats/filebeat:8.10.2
@@ -140,6 +185,10 @@ spec:
           "-e",
         ]
         env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         - name: ELASTICSEARCH_HOST
           value: elasticsearch
         - name: LOGSTASH_HOST
@@ -156,6 +205,9 @@ spec:
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
           readOnly: true
+        - name: varlogpods
+          mountPath: /var/log/pods
+          readOnly: true
         - name: varlog
           mountPath: /var/log
           readOnly: true
@@ -167,6 +219,9 @@ spec:
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: varlogpods
+        hostPath:
+          path: /var/log/pods
       - name: varlog
         hostPath:
           path: /var/log
@@ -185,12 +240,12 @@ data:
     filebeat.inputs:
     - type: container
       paths:
-        - /var/log/containers/*.log
+        - /var/log/pods/*/*/*.log
       processors:
         - add_kubernetes_metadata:
             host: ${NODE_NAME}
             matchers:
             - logs_path:
-                logs_path: "/var/log/containers/"
+                logs_path: "/var/log/pods/"
     output.logstash:
       hosts: ["logstash:5044"]
