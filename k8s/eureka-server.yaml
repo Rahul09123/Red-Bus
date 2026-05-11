@@ -18,7 +18,7 @@ spec:
       containers:
       - name: eureka-server
         image: rahul0129/redbus-eureka-server:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8761
         env:

@@ -63,10 +63,23 @@ spec:
           failureThreshold: 6
       volumes:
       - name: postgres-storage
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: postgres-pvc
       - name: postgres-init
         configMap:
           name: postgres-init-scripts
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: redbus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
