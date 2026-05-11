@@ -175,8 +175,6 @@ spec:
     spec:
       serviceAccountName: filebeat
       terminationGracePeriodSeconds: 30
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: filebeat
         image: docker.elastic.co/beats/filebeat:8.10.2
@@ -237,12 +235,15 @@ metadata:
   namespace: redbus
 data:
   filebeat.yml: |-
-    filebeat.inputs:
-    - type: container
-      paths:
-        - /var/log/pods/*/*/*.log
-      processors:
-        - add_kubernetes_metadata:
-            host: ${NODE_NAME}
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints.enabled: true
+          hints.default_config:
+            type: container
+            paths:
+              - /var/log/pods/${data.kubernetes.pod.uid}/${data.kubernetes.container.name}/*.log
+
     output.logstash:
       hosts: ["logstash:5044"]
