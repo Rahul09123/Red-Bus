@@ -1,6 +1,6 @@
 # RedBus: Production-Grade Microservices Ticketing System
 
-RedBus is a **high-availability, role-aware** (Customer / Company / Admin) intercity bus ticketing platform. It features a distributed microservice topology built on **Java Spring Boot**, orchestrated with **Kubernetes**, and monitored with the **ELK Stack**.
+RedBus is a **high-availability, role-aware** (Customer / Company / Admin) intercity bus ticketing platform. It features a distributed microservice topology built on **Java Spring Boot**, orchestrated with **Kubernetes**, and monitored with the **ELK Stack**
 
 ---
 
