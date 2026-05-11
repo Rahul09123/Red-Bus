@@ -71,12 +71,22 @@ spec:
                 }
               }
 
+              filter {
+                if [log][file][path] {
+                  grok {
+                    match => {
+                      "[log][file][path]" => "/var/log/pods/%{DATA:kubernetes_namespace}_%{DATA:kubernetes_pod_name}_%{DATA:kubernetes_pod_uid}/%{DATA:kubernetes_container_name}/%{GREEDYDATA}"
+                    }
+                    tag_on_failure => ["_grokparsefailure_path"]
+                  }
+                }
+              }
+
               output {
                 elasticsearch {
                   hosts => ["http://elasticsearch:9200"]
                   index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
                 }
-                stdout { codec => rubydebug }
               }
 
           ports:
