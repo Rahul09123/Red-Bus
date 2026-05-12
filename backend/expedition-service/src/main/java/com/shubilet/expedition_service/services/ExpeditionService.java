@@ -3,6 +3,7 @@ package com.shubilet.expedition_service.services;
 import java.util.List;
 
 import com.shubilet.expedition_service.common.enums.forReservation.ExpeditionStatus;
+import com.shubilet.expedition_service.dataTransferObjects.responses.base.CompanyStatsDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCustomerDTO;
 
@@ -25,4 +26,6 @@ public interface ExpeditionService {
     public ExpeditionStatus canBeReserved(int expeditionId);
 
     public int getExpeditionPrice(int expeditionId);
+
+    public CompanyStatsDTO getCompanyStats(int companyId);
 }

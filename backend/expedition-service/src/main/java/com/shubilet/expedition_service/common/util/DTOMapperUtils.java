@@ -79,6 +79,7 @@ public class DTOMapperUtils {
         String date = "";
         String time = "";
         double price = 0.0;
+        double basePrice = 0.0;
         int duration = 0;
         int capacity = 0;
         int numberOfBookedSeats = 0;
@@ -96,6 +97,7 @@ public class DTOMapperUtils {
             }
 
             price = (repoDTO.getPrice() != null) ? repoDTO.getPrice().doubleValue() : 0.0;
+            basePrice = (repoDTO.getBasePrice() != null) ? repoDTO.getBasePrice().doubleValue() : 0.0;
             duration = (repoDTO.getDuration() != null) ? repoDTO.getDuration() : 0;
             capacity = (repoDTO.getCapacity() != null) ? repoDTO.getCapacity() : 0;
             numberOfBookedSeats = (repoDTO.getNumberOfBookedSeats() != null) ? repoDTO.getNumberOfBookedSeats() : 0;
@@ -108,6 +110,7 @@ public class DTOMapperUtils {
             arrivalCity,
             date,
             time,
+            basePrice,
             price,
             duration,
             capacity,

@@ -8,6 +8,7 @@ public class ExpeditionForCompanyRepoDTO {
     private String departureCity;
     private String arrivalCity;
     private Instant dateAndTime;
+    private BigDecimal basePrice;
     private BigDecimal price;
     private Integer duration;
     private Integer capacity;
@@ -20,6 +21,7 @@ public class ExpeditionForCompanyRepoDTO {
         String departureCity,
         String arrivalCity,
         Instant dateAndTime,
+        BigDecimal basePrice,
         BigDecimal price,
         Integer duration,
         Integer capacity,
@@ -30,6 +32,7 @@ public class ExpeditionForCompanyRepoDTO {
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
         this.dateAndTime = dateAndTime;
+        this.basePrice = basePrice;
         this.price = price;
         this.duration = duration;
         this.capacity = capacity;
@@ -70,6 +73,13 @@ public class ExpeditionForCompanyRepoDTO {
     }
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Integer getDuration() {

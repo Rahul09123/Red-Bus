@@ -118,6 +118,10 @@ public class ExpeditionServiceImpl implements ExpeditionService {
         }
 
         expedition.setNumberOfBookedSeats(expedition.getNumberOfBookedSeats() + 1);
+        
+        // Update dynamic price before adding to profit and saving
+        expedition.updateDynamicPrice();
+        
         expedition.setProfit(expedition.getProfit().add(expedition.getPrice()));
         expeditionRepository.save(expedition);
         
@@ -155,5 +159,17 @@ public class ExpeditionServiceImpl implements ExpeditionService {
         }
 
         return expedition.getPrice().intValue();
+    }
+
+    public CompanyStatsDTO getCompanyStats(int companyId) {
+        long totalExpeditions = expeditionRepository.countByCompanyId(companyId);
+        Long totalBookedSeatsLong = expeditionRepository.sumBookedSeatsByCompanyId(companyId);
+        BigDecimal totalProfitBD = expeditionRepository.sumProfitByCompanyId(companyId);
+        long activeExpeditions = expeditionRepository.countActiveByCompanyId(companyId, Instant.now());
+
+        long totalBookedSeats = (totalBookedSeatsLong != null) ? totalBookedSeatsLong : 0L;
+        double totalProfit = (totalProfitBD != null) ? totalProfitBD.doubleValue() : 0.0;
+
+        return new CompanyStatsDTO(totalExpeditions, totalBookedSeats, totalProfit, activeExpeditions);
     }
 }

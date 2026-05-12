@@ -11,6 +11,7 @@ import com.shubilet.expedition_service.dataTransferObjects.requests.ExpeditionVi
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.SeatForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.complex.ExpeditionsForCompanyDTO;
+import com.shubilet.expedition_service.dataTransferObjects.responses.complex.CompanyStatsResponseDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.complex.SeatsForCompanyDTO;
 
 /****
@@ -297,4 +298,7 @@ public interface ViewForCompanyController {
     */
     @PostMapping("/expeditionDetails")
     public ResponseEntity<SeatsForCompanyDTO> viewExpeditionDetails(ExpeditionViewByIdDTO expeditionViewById);
+
+    @PostMapping("/stats")
+    public ResponseEntity<CompanyStatsResponseDTO> viewCompanyStats(CompanyIdDTO companyIdDTO);
 }

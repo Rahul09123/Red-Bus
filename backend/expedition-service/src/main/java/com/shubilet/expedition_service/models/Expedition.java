@@ -57,6 +57,11 @@ public class Expedition implements Serializable {
     private Integer capacity;
 
     @NotNull
+    @Min(0)
+    @Column(name = "base_price", nullable = false, updatable = false, precision = 10, scale = 2)
+    private BigDecimal basePrice;
+
+    @NotNull
     @Column(name = "number_of_booked_seats", nullable = false, updatable = true)
     private Integer numberOfBookedSeats;
 
@@ -78,7 +83,7 @@ public class Expedition implements Serializable {
         Integer departureCityId,
         Integer arrivalCityId,
         Instant dateAndTime,
-        BigDecimal price,
+        BigDecimal basePrice,
         Integer duration,
         Integer capacity,
         Integer companyId
@@ -86,7 +91,8 @@ public class Expedition implements Serializable {
         this.departureCityId = departureCityId;
         this.arrivalCityId = arrivalCityId;
         this.dateAndTime = dateAndTime;
-        this.price = price;
+        this.basePrice = basePrice;
+        this.price = basePrice; // Initial price is base price
         this.duration = duration;
         this.capacity = capacity;
         this.numberOfBookedSeats = 0;
@@ -98,6 +104,7 @@ public class Expedition implements Serializable {
         Integer departureCityId,
         Integer arrivalCityId,
         Instant dateAndTime,
+        BigDecimal basePrice,
         BigDecimal price,
         Integer duration,
         Integer capacity,
@@ -108,6 +115,7 @@ public class Expedition implements Serializable {
         this.departureCityId = departureCityId;
         this.arrivalCityId = arrivalCityId;
         this.dateAndTime = dateAndTime;
+        this.basePrice = basePrice;
         this.price = price;
         this.duration = duration;
         this.capacity = capacity;
@@ -152,6 +160,13 @@ public class Expedition implements Serializable {
     }
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Integer getDuration() {
@@ -215,6 +230,7 @@ public class Expedition implements Serializable {
             ", departureCityId=" + departureCityId +
             ", arrivalCityId=" + arrivalCityId +
             ", dateAndTime=" + dateAndTime +
+            ", basePrice=" + basePrice +
             ", price=" + price +
             ", duration=" + duration +
             ", capacity=" + capacity +
@@ -222,5 +238,21 @@ public class Expedition implements Serializable {
             ", profit=" + profit +
             ", companyId=" + companyId +
             '}';
+    }
+
+    /**
+     * Calculates the dynamic price based on seat occupancy.
+     * Logic: Price increases linearly with every seat booked.
+     * At 0% occupancy, price = basePrice.
+     * At 100% occupancy, price = basePrice * 1.5.
+     */
+    public void updateDynamicPrice() {
+        if (capacity == 0) return;
+        
+        double occupancyRate = (double) numberOfBookedSeats / capacity;
+        // multiplier = 1 + (0.5 * occupancyRate)
+        BigDecimal multiplier = BigDecimal.valueOf(1.0 + (0.5 * occupancyRate));
+
+        this.price = this.basePrice.multiply(multiplier).setScale(2, java.math.RoundingMode.HALF_UP);
     }
 }

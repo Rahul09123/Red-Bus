@@ -10,7 +10,7 @@ const MODE = {
 
 function fmtMoney(v) {
   if (v == null || Number.isNaN(Number(v))) return "";
-  return Number(v).toFixed(2);
+  return "₹" + Number(v).toFixed(2);
 }
 
 export default function CompanyExpeditionList() {

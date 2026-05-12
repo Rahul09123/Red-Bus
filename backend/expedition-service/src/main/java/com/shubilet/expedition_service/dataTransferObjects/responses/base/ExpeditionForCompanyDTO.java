@@ -6,6 +6,7 @@ public class ExpeditionForCompanyDTO {
     private String arrivalCity;
     private String date;
     private String time;
+    private double basePrice;
     private double price;
     private int duration;
     private int capacity;
@@ -22,6 +23,7 @@ public class ExpeditionForCompanyDTO {
         String arrivalCity,
         String date,
         String time,
+        double basePrice,
         double price,
         int duration,
         int capacity,
@@ -33,6 +35,7 @@ public class ExpeditionForCompanyDTO {
         this.arrivalCity = arrivalCity;
         this.date = date;
         this.time = time;
+        this.basePrice = basePrice;
         this.price = price;
         this.duration = duration;
         this.capacity = capacity;
@@ -80,6 +83,13 @@ public class ExpeditionForCompanyDTO {
     }
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Integer getDuration() {

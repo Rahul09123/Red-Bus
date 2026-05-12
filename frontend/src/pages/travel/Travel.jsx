@@ -411,7 +411,7 @@ export default function Travel() {
                                                 </div>
 
                                                 <div className="cardRight">
-                                                    <span className="priceTag">${exp.price}</span>
+                                                    <span className="priceTag">₹{exp.price}</span>
                                                     <button
                                                         className="buyBtn"
                                                         onClick={() => toggleExpedition(exp.expeditionId)}

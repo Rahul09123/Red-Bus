@@ -70,6 +70,52 @@
   color: #64748B;
 }
 
+/* STATS GRID */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1E293B;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statCard.highlight .statValue {
+  color: #DC2626;
+}
+
+.statCard.success .statValue {
+  color: #059669;
+}
+
+.statCard:hover {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
 .actionsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;

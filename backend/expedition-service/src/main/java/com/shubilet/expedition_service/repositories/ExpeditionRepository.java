@@ -2,6 +2,7 @@ package com.shubilet.expedition_service.repositories;
 
 import java.util.List;
 import java.time.Instant;
+import java.math.BigDecimal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -68,6 +69,7 @@ public interface ExpeditionRepository extends JpaRepository<Expedition, Integer>
             dc.name,
             ac.name,
             e.dateAndTime,
+            e.basePrice,
             e.price,
             e.duration,
             e.capacity,
@@ -141,6 +143,7 @@ public interface ExpeditionRepository extends JpaRepository<Expedition, Integer>
             dc.name,
             ac.name,
             e.dateAndTime,
+            e.basePrice,
             e.price,
             e.duration,
             e.capacity,
@@ -306,6 +309,7 @@ public interface ExpeditionRepository extends JpaRepository<Expedition, Integer>
             dc.name,
             ac.name,
             e.dateAndTime,
+            e.basePrice,
             e.price,
             e.duration,
             e.capacity,
@@ -388,4 +392,16 @@ public interface ExpeditionRepository extends JpaRepository<Expedition, Integer>
         @Param("expeditionId") int expeditionId, 
         @Param("now") Instant now
     );
+
+    @Query("SELECT COUNT(e) FROM Expedition e WHERE e.companyId = :companyId")
+    long countByCompanyId(@Param("companyId") int companyId);
+
+    @Query("SELECT SUM(e.numberOfBookedSeats) FROM Expedition e WHERE e.companyId = :companyId")
+    Long sumBookedSeatsByCompanyId(@Param("companyId") int companyId);
+
+    @Query("SELECT SUM(e.profit) FROM Expedition e WHERE e.companyId = :companyId")
+    BigDecimal sumProfitByCompanyId(@Param("companyId") int companyId);
+
+    @Query("SELECT COUNT(e) FROM Expedition e WHERE e.companyId = :companyId AND e.dateAndTime >= :now")
+    long countActiveByCompanyId(@Param("companyId") int companyId, @Param("now") Instant now);
 }

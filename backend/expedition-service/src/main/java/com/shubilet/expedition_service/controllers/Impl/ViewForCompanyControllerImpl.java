@@ -19,6 +19,7 @@ import com.shubilet.expedition_service.dataTransferObjects.requests.ExpeditionVi
 import com.shubilet.expedition_service.dataTransferObjects.requests.ExpeditionViewByIdDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.SeatForCompanyDTO;
+import com.shubilet.expedition_service.dataTransferObjects.responses.complex.CompanyStatsResponseDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.complex.ExpeditionsForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.complex.SeatsForCompanyDTO;
 import com.shubilet.expedition_service.services.ExpeditionService;
@@ -327,5 +328,17 @@ public class ViewForCompanyControllerImpl implements ViewForCompanyController {
 
         logger.info("Expedition details found for expedition id: {}", expeditionId);
         return ResponseEntity.ok().body(new SeatsForCompanyDTO("Expedition details found", seats));
+    }
+
+    @PostMapping("/stats")
+    public ResponseEntity<CompanyStatsResponseDTO> viewCompanyStats(@RequestBody CompanyIdDTO companyIdDTO) {
+        if(companyIdDTO == null || companyIdDTO.getCompanyId() <= 0) {
+            return ResponseEntity.badRequest().body(new CompanyStatsResponseDTO("Invalid company id", null));
+        }
+        
+        int companyId = companyIdDTO.getCompanyId();
+        logger.info("Fetching stats for company id: {}", companyId);
+        
+        return ResponseEntity.ok().body(new CompanyStatsResponseDTO("Stats found", expeditionService.getCompanyStats(companyId)));
     }
 }
