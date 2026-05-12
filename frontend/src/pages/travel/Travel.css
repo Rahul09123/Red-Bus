@@ -99,6 +99,8 @@
     grid-template-columns: repeat(3, 1fr) auto;
     gap: 16px;
     align-items: end;
+    position: relative;
+    z-index: 100;
 }
 
 @media (max-width: 768px) {
@@ -204,7 +206,7 @@ select.formInput {
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
     border: 1px solid #E2E8F0;
     padding: 16px;
-    z-index: 100;
+    z-index: 1001;
     animation: fadeIn 0.15s ease-out;
 }
 
