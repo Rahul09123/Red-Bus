@@ -50,7 +50,8 @@ pipeline {
                             --docker-username=\$DOCKER_HUB_CREDENTIALS_USR \\
                             --docker-password=\$DOCKER_HUB_CREDENTIALS_PSW \\
                             --docker-email=redbus@example.com
-                        kubectl apply -f k8s/secrets.yaml --validate=false
+                        kubectl apply -f k8s/deprecated-secrets/secrets.yaml --validate=false
+                        kubectl apply -f k8s/vault.yaml --validate=false
                         kubectl apply -f k8s/postgres.yaml --validate=false
                         kubectl apply -f k8s/pgadmin.yaml --validate=false
                         kubectl apply -f k8s/eureka-server.yaml --validate=false
