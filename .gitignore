@@ -154,3 +154,7 @@ FlightInitializer.java
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific
+*.pdf
+images/
