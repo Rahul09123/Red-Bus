@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import RouteMap from "../../components/RouteMap/RouteMap";
 import "./Travel.css";
 
 const CITIES = [
@@ -365,6 +366,11 @@ export default function Travel() {
                                 {isLoading ? "Searching..." : "Search"}
                             </button>
                         </form>
+
+                        {/* ROUTE MAP VISUALIZATION */}
+                        {(fromCity || toCity) && (
+                            <RouteMap fromCity={fromCity} toCity={toCity} />
+                        )}
 
                         <div className="listWrap">
                             {isLoading ? (

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.shubilet.expedition_service.common.enums.forReservation.ExpeditionStatus;
 import com.shubilet.expedition_service.common.util.DTOMapperUtils;
+import com.shubilet.expedition_service.dataTransferObjects.responses.base.CompanyStatsDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCompanyDTO;
 import com.shubilet.expedition_service.dataTransferObjects.responses.base.ExpeditionForCustomerDTO;
 import com.shubilet.expedition_service.models.Expedition;
