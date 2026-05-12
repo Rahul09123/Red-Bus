@@ -168,6 +168,13 @@ This ensures that as a bus fills up, the price increases incrementally per seat,
 
 To improve the user experience, the search results page integrates \texttt{React-Leaflet} to provide a geospatial view of the journey. The system maps city names to geographic coordinates (Latitude/Longitude) and draws an interactive dashed polyline between the origin and destination on a high-quality map tile layer.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/report/Frontend-having-map.png}
+    \caption{Interactive Route Visualization between Source and Destination}
+\end{figure}
+\textbf{Explanation:} This visualization provides users with a clear geospatial understanding of the journey path. By mapping city coordinates and drawing a dynamic polyline, the platform enhances the booking experience with real-time feedback on the selected route.
+
 \subsection{Operator Business Intelligence Dashboard}
 
 The Company (Operator) role features a dedicated dashboard that provides real-time statistics aggregated across all their expeditions. The dashboard tracks:
@@ -255,12 +262,7 @@ The deployment stage applies Kubernetes manifests in a deterministic sequence:
 
 This ordered flow ensures dependencies are ready before dependent services start. The final verification stage uses \texttt{kubectl get pods} and \texttt{kubectl get svc} in the target namespace to confirm rollout status.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/report/fig06-overview.png}
-    \caption{Pipeline or deployment transition evidence}
-\end{figure}
-\textbf{Explanation:} This screenshot is used to validate the CI/CD narrative that code and deployment actions are executed through structured automation stages.
+
 
 \begin{figure}[H]
     \centering
