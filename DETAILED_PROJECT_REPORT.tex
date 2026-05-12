@@ -141,7 +141,7 @@ The security service handles session lifecycle operations, including session cre
 
 \subsubsection{Expedition Service}
 
-This service owns the transport domain: expeditions, route listing, seat visibility, and ticket-related workflows. It is core to customer and company operational flows and can be scaled independently when booking/search load increases.
+This service owns the transport domain: expeditions, route listing, seat visibility, and ticket-related workflows. It implements a \textbf{Granular Dynamic Pricing Engine} that automatically adjusts ticket prices in real-time based on bus occupancy rates. It is core to customer and company operational flows and can be scaled independently when booking/search load increases.
 
 \subsubsection{Payment Service}
 
@@ -154,7 +154,36 @@ The payment service handles payment-domain operations and transaction status man
 \end{figure}
 \textbf{Explanation:} This image supports the service-boundary discussion by showing that user interactions are already segmented into contextual flows, which map cleanly onto backend domain services.
 
-\section{Service Communication Model}
+\section{Advanced Business Logic Implementation}
+
+To elevate the platform from a simple CRUD application to a production-grade system, several advanced business features were implemented:
+
+\subsection{Granular Dynamic Pricing Engine}
+
+Instead of static pricing, the platform uses a continuous linear growth model to optimize revenue and manage demand. The formula used for every search result is:
+\[ \text{Price} = \text{BasePrice} \times (1 + 0.5 \times \text{OccupancyRate}) \]
+This ensures that as a bus fills up, the price increases incrementally per seat, rather than in sudden jumps. All financial calculations use \texttt{BigDecimal} with \texttt{HALF\_UP} rounding to ensure mathematical precision for Indian Rupee (₹) transactions.
+
+\subsection{Interactive Route Visualization}
+
+To improve the user experience, the search results page integrates \texttt{React-Leaflet} to provide a geospatial view of the journey. The system maps city names to geographic coordinates (Latitude/Longitude) and draws an interactive dashed polyline between the origin and destination on a high-quality map tile layer.
+
+\subsection{Operator Business Intelligence Dashboard}
+
+The Company (Operator) role features a dedicated dashboard that provides real-time statistics aggregated across all their expeditions. The dashboard tracks:
+\begin{itemize}
+    \item \textbf{Total Trips}: Number of active and past expeditions.
+    \item \textbf{Total Tickets Sold}: Cumulative volume of seat bookings.
+    \item \textbf{Net Revenue}: Total earnings calculated in INR.
+    \item \textbf{Occupancy Trends}: Business health indicators.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/Company_Expedition_list.png}
+    \caption{Operator Dashboard with Real-time Business Metrics}
+\end{figure}
+\textbf{Explanation:} This view demonstrates the backend's ability to perform complex JPA projections and aggregations to provide actionable business intelligence to transport operators.
 
 \subsection{Request Flow}
 
