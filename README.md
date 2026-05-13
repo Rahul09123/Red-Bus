@@ -10,6 +10,15 @@ RedBus is a **high-availability, role-aware** (Customer / Company / Admin) inter
 - **Centralized Observability**: Full ELK stack integration (Elasticsearch, Logstash, Kibana, Filebeat) with Kubernetes metadata enrichment.
 - **Automated CI/CD**: Jenkins "Master Orchestrator" pipeline for parallel building and deployment of all services.
 - **Service Discovery**: Netflix Eureka integration for dynamic service registration and lookup.
+- **Granular Dynamic Pricing**: Occupancy-based pricing engine using a linear growth model for revenue optimization.
+- **Geospatial Route Mapping**: Interactive Leaflet-based route visualization with city coordinate mapping.
+- **Operator BI Dashboard**: Real-time business metrics (Net Revenue, Occupancy, Sales) for bus companies.
+
+---
+
+## 📑 Project Documentation
+The comprehensive design decisions, architecture diagrams, and evaluation metrics are available in the:
+👉 **[Final Project Report (PDF)](./DETAILED_PROJECT_REPORT.pdf)**
 
 ---
 
@@ -90,6 +99,8 @@ kubectl apply -f k8s/api-gateway.yaml
 - **Fault Tolerance**: Liveness and Readiness probes ensure self-healing pods.
 - **Scalability**: HPA scales pods based on real-time CPU metrics.
 - **Security**: Kubernetes Secrets for DB credentials and Session-based Auth.
+- **Business Logic**: Granular Dynamic Pricing and real-time occupancy calculations.
+- **Visualization**: Geospatial route tracking using React-Leaflet.
 - **Automation**: One-click "Build & Deploy" via Jenkins Orchestrator.
 
 ---
