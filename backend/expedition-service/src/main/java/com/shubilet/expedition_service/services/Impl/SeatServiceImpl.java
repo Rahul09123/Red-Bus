@@ -38,8 +38,12 @@ public class SeatServiceImpl implements SeatService {
     }
 
     public List<SeatForCustomerDTO> getByAvailableSeats(int expeditionId) {
-        Instant now = Instant.now();
-        return DTOMapperUtils.toSeatForCustomerDTO(seatRepository.findSeatsByExpeditionIdAndStatus(expeditionId, now));
+        List<Seat> seats = seatRepository.findAllByExpeditionIdOrderBySeatNoAsc(expeditionId);
+        return seats.stream().map(s -> new SeatForCustomerDTO(
+            s.getExpeditionId(),
+            s.getSeatNo(),
+            s.getStatus().toString()
+        )).toList();
     }
 
     public List<SeatForCompanyDTO> getSeatsByExpeditionIdAndCompanyId(int expeditionId, int companyId) {
@@ -69,14 +73,48 @@ public class SeatServiceImpl implements SeatService {
         }
 
         if(seat.isBooked()) {
-            return -1;
+            // Check if it's blocked by the same customer, then it's okay to book.
+            if (seat.getStatus() == com.shubilet.expedition_service.common.enums.SeatStatusForModel.BLOCKED 
+                && seat.getBlockedBy() != null && seat.getBlockedBy() == customerId) {
+                // Proceed
+            } else {
+                return -1;
+            }
         }
 
         seat.setBooked(true);
         seat.setCustomerId(customerId);
+        seat.setBlockedBy(null);
+        seat.setBlockedUntil(null);
         seatRepository.save(seat);
         
         return seat.getId();
+    }
+
+    public boolean blockSeat(int expeditionId, int seatNo, int customerId) {
+        Seat seat = seatRepository.findByExpeditionIdAndSeatNo(expeditionId, seatNo);
+        if (seat == null || seat.isBooked()) {
+            return false;
+        }
+        seat.setStatus(com.shubilet.expedition_service.common.enums.SeatStatusForModel.BLOCKED);
+        seat.setBlockedBy(customerId);
+        seat.setBlockedUntil(Instant.now().plusSeconds(120)); // Block for 2 minutes
+        seatRepository.save(seat);
+        return true;
+    }
+
+    public boolean unblockSeat(int expeditionId, int seatNo, int customerId) {
+        Seat seat = seatRepository.findByExpeditionIdAndSeatNo(expeditionId, seatNo);
+        if (seat == null) return false;
+        if (seat.getStatus() == com.shubilet.expedition_service.common.enums.SeatStatusForModel.BLOCKED 
+            && seat.getBlockedBy() != null && seat.getBlockedBy() == customerId) {
+            seat.setStatus(com.shubilet.expedition_service.common.enums.SeatStatusForModel.AVAILABLE);
+            seat.setBlockedBy(null);
+            seat.setBlockedUntil(null);
+            seatRepository.save(seat);
+            return true;
+        }
+        return false;
     }
 
     public SeatStatus canBeReserved(int expeditionId, int seatNo) {

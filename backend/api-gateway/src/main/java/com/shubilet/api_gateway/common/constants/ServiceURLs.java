@@ -11,6 +11,8 @@ public class ServiceURLs {
     public static final String EXPEDITION_SERVICE_GET_COMPANY_EXPEDITIONS_FUTURE_URL = "http://expedition-service:8082/api/view/company/activeExpeditions";
     public static final String EXPEDITION_SERVICE_GET_COMPANY_EXPEDITION_DETAIL_URL = "http://expedition-service:8082/api/view/company/expeditionDetails";
     public static final String EXPEDITION_SERVICE_GET_CUSTOMER_CARDS_URL = "http://expedition-service:8082/api/reservation/view_cards";
+    public static final String EXPEDITION_SERVICE_BLOCK_SEAT_URL = "http://expedition-service:8082/api/reservation/block_seat";
+    public static final String EXPEDITION_SERVICE_UNBLOCK_SEAT_URL = "http://expedition-service:8082/api/reservation/unblock_seat";
 
 
     // Member Service URLs (port 8081)

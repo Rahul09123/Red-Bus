@@ -26,6 +26,9 @@ package com.shubilet.expedition_service.dataTransferObjects.responses.message;
 public class MessageDTO {
     private String message;
 
+    public MessageDTO() {
+    }
+
     public MessageDTO(String message) {
         this.message = message;
     }

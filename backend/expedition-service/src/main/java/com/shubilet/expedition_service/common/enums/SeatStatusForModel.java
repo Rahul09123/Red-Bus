@@ -2,7 +2,8 @@ package com.shubilet.expedition_service.common.enums;
 
 public enum SeatStatusForModel {
         AVAILABLE("Available"),
-        RESERVED("Reserved");
+        RESERVED("Reserved"),
+        BLOCKED("Blocked");
 
         private final String displayName;
 

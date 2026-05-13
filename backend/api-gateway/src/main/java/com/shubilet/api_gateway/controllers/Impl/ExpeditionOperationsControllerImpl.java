@@ -27,9 +27,12 @@ import com.shubilet.api_gateway.managers.HttpSessionManager;
 import com.shubilet.api_gateway.mappers.CompanyIdNameMapper;
 import com.shubilet.api_gateway.mappers.CustomerIdNameMapper;
 import com.shubilet.api_gateway.mappers.expeditionOperations.ExpeditionCreationExternalMapper;
-import com.shubilet.api_gateway.mappers.expeditionOperations.ExpeditionIdMapper;
 import com.shubilet.api_gateway.mappers.expeditionOperations.ExpeditionSearchCompanyResponseMapper;
+import com.shubilet.api_gateway.mappers.expeditionOperations.ExpeditionIdMapper;
 import com.shubilet.api_gateway.mappers.expeditionOperations.SeatsForCompanyInternalMapper;
+import com.shubilet.api_gateway.mappers.expeditionOperations.BlockSeatExternalMapper;
+import com.shubilet.api_gateway.dataTransferObjects.external.requests.expeditionOperations.BlockSeatExternalDTO;
+import com.shubilet.api_gateway.dataTransferObjects.internal.requests.expeditionOperations.BlockSeatInternalDTO;
 
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -59,14 +62,16 @@ public class ExpeditionOperationsControllerImpl implements ExpeditionOperationsC
     private final ExpeditionSearchCompanyResponseMapper expeditionSearchCompanyResponseMapper;
     private final ExpeditionIdMapper expeditionIdMapper;
     private final SeatsForCompanyInternalMapper seatsForCompanyInternalMapper;
+    private final BlockSeatExternalMapper blockSeatExternalMapper;
 
 
-    public ExpeditionOperationsControllerImpl(RestTemplate restTemplate, ExpeditionCreationExternalMapper expeditionCreationExternalMapper, ExpeditionSearchCompanyResponseMapper expeditionSearchCompanyResponseMapper, ExpeditionIdMapper expeditionIdMapper, SeatsForCompanyInternalMapper seatsForCompanyInternalMapper) {
+    public ExpeditionOperationsControllerImpl(RestTemplate restTemplate, ExpeditionCreationExternalMapper expeditionCreationExternalMapper, ExpeditionSearchCompanyResponseMapper expeditionSearchCompanyResponseMapper, ExpeditionIdMapper expeditionIdMapper, SeatsForCompanyInternalMapper seatsForCompanyInternalMapper, BlockSeatExternalMapper blockSeatExternalMapper) {
         this.restTemplate = restTemplate;
         this.expeditionCreationExternalMapper = expeditionCreationExternalMapper;
         this.expeditionSearchCompanyResponseMapper = expeditionSearchCompanyResponseMapper;
         this.expeditionIdMapper = expeditionIdMapper;
         this.seatsForCompanyInternalMapper = seatsForCompanyInternalMapper;
+        this.blockSeatExternalMapper = blockSeatExternalMapper;
         this.httpSessionManager = new HttpSessionManager();
     }
 
@@ -545,5 +550,81 @@ public class ExpeditionOperationsControllerImpl implements ExpeditionOperationsC
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(new SeatsForCompanyExternalDTO("Success", seatsForCompanyExternalDTO));
+    }
+
+    @Override
+    @PostMapping("/customer/block_seat")
+    public ResponseEntity<MessageDTO> blockSeat(HttpSession httpSession, @RequestBody BlockSeatExternalDTO blockSeatExternalDTO) {
+        String requestId = UUID.randomUUID().toString();
+        logger.info("Start Block Seat (requestId={})", requestId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Request-Id", requestId);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        CookieDTO cookieDTO = httpSessionManager.fromSessionToCookieDTO(httpSession);
+        HttpEntity<CookieDTO> securityServiceCheckCustomerSessionRequest = new HttpEntity<>(cookieDTO, headers);
+        ResponseEntity<MemberCheckMessageDTO> securityServiceCheckCustomerSessionResponse = restTemplate.exchange(
+                ServiceURLs.SECURITY_SERVICE_CHECK_CUSTOMER_SESSION_URL,
+                HttpMethod.POST,
+                securityServiceCheckCustomerSessionRequest,
+                MemberCheckMessageDTO.class
+        );
+
+        if (!securityServiceCheckCustomerSessionResponse.getStatusCode().is2xxSuccessful()) {
+            return ResponseEntity.status(securityServiceCheckCustomerSessionResponse.getStatusCode())
+                    .body(new MessageDTO(securityServiceCheckCustomerSessionResponse.getBody().getMessage()));
+        }
+
+        BlockSeatInternalDTO blockSeatInternalDTO = blockSeatExternalMapper.toBlockSeatInternalDTO(
+                blockSeatExternalDTO,
+                securityServiceCheckCustomerSessionResponse.getBody()
+        );
+
+        HttpEntity<BlockSeatInternalDTO> expeditionServiceBlockSeatRequest = new HttpEntity<>(blockSeatInternalDTO, headers);
+        return restTemplate.exchange(
+                ServiceURLs.EXPEDITION_SERVICE_BLOCK_SEAT_URL,
+                HttpMethod.POST,
+                expeditionServiceBlockSeatRequest,
+                MessageDTO.class
+        );
+    }
+
+    @Override
+    @PostMapping("/customer/unblock_seat")
+    public ResponseEntity<MessageDTO> unblockSeat(HttpSession httpSession, @RequestBody BlockSeatExternalDTO blockSeatExternalDTO) {
+        String requestId = UUID.randomUUID().toString();
+        logger.info("Start Unblock Seat (requestId={})", requestId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Request-Id", requestId);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        CookieDTO cookieDTO = httpSessionManager.fromSessionToCookieDTO(httpSession);
+        HttpEntity<CookieDTO> securityServiceCheckCustomerSessionRequest = new HttpEntity<>(cookieDTO, headers);
+        ResponseEntity<MemberCheckMessageDTO> securityServiceCheckCustomerSessionResponse = restTemplate.exchange(
+                ServiceURLs.SECURITY_SERVICE_CHECK_CUSTOMER_SESSION_URL,
+                HttpMethod.POST,
+                securityServiceCheckCustomerSessionRequest,
+                MemberCheckMessageDTO.class
+        );
+
+        if (!securityServiceCheckCustomerSessionResponse.getStatusCode().is2xxSuccessful()) {
+            return ResponseEntity.status(securityServiceCheckCustomerSessionResponse.getStatusCode())
+                    .body(new MessageDTO(securityServiceCheckCustomerSessionResponse.getBody().getMessage()));
+        }
+
+        BlockSeatInternalDTO blockSeatInternalDTO = blockSeatExternalMapper.toBlockSeatInternalDTO(
+                blockSeatExternalDTO,
+                securityServiceCheckCustomerSessionResponse.getBody()
+        );
+
+        HttpEntity<BlockSeatInternalDTO> expeditionServiceUnblockSeatRequest = new HttpEntity<>(blockSeatInternalDTO, headers);
+        return restTemplate.exchange(
+                ServiceURLs.EXPEDITION_SERVICE_UNBLOCK_SEAT_URL,
+                HttpMethod.POST,
+                expeditionServiceUnblockSeatRequest,
+                MessageDTO.class
+        );
     }
 }

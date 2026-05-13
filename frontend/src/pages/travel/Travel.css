@@ -496,6 +496,10 @@ select.formInput {
     opacity: 0.5;
 }
 
+.dot.blocked {
+    background: #F59E0B;
+}
+
 .dot.selected {
     background: #DC2626;
 }
@@ -599,6 +603,19 @@ select.formInput {
     color: #94A3B8;
     border-color: transparent;
     cursor: not-allowed;
+}
+
+.seat.blocked {
+    background: #FEF3C7;
+    color: #D97706;
+    border-color: #F59E0B;
+    cursor: not-allowed;
+}
+
+.seat.blocked.selected {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #DC2626;
 }
 
 .seat.selected {

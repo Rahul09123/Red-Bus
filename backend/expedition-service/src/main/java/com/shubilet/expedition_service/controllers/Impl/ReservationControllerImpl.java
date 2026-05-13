@@ -40,6 +40,8 @@ import com.shubilet.expedition_service.dataTransferObjects.responses.middle.Tick
 import com.shubilet.expedition_service.services.ExpeditionService;
 import com.shubilet.expedition_service.services.SeatService;
 import com.shubilet.expedition_service.services.TicketService;
+import com.shubilet.expedition_service.dataTransferObjects.requests.BlockSeatDTO;
+import com.shubilet.expedition_service.dataTransferObjects.responses.message.MessageDTO;
 
 /****
 
@@ -351,6 +353,28 @@ public class ReservationControllerImpl implements RezervationController {
         } catch (Exception ex) {
             logger.error("Unexpected error while fetching cards", ex);
             return errorUtils.criticalError();
+        }
+    }
+
+    @Override
+    @PostMapping("/block_seat")
+    public ResponseEntity<MessageDTO> blockSeat(@RequestBody BlockSeatDTO blockSeatDTO) {
+        boolean success = seatService.blockSeat(blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
+        if (success) {
+            return ResponseEntity.ok(new MessageDTO("Seat blocked successfully"));
+        } else {
+            return ResponseEntity.status(400).body(new MessageDTO("Seat could not be blocked"));
+        }
+    }
+
+    @Override
+    @PostMapping("/unblock_seat")
+    public ResponseEntity<MessageDTO> unblockSeat(@RequestBody BlockSeatDTO blockSeatDTO) {
+        boolean success = seatService.unblockSeat(blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
+        if (success) {
+            return ResponseEntity.ok(new MessageDTO("Seat unblocked successfully"));
+        } else {
+            return ResponseEntity.status(400).body(new MessageDTO("Seat could not be unblocked"));
         }
     }
     

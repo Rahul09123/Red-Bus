@@ -26,4 +26,10 @@ public interface ExpeditionOperationsController {
 
     @PostMapping("/company/get/future")
     ResponseEntity<ExpeditionsForCompanyDTO> sendCompanyFutureExpeditions(HttpSession httpSession);
+
+    @PostMapping("/customer/block_seat")
+    ResponseEntity<com.shubilet.api_gateway.dataTransferObjects.MessageDTO> blockSeat(HttpSession httpSession, @RequestBody com.shubilet.api_gateway.dataTransferObjects.external.requests.expeditionOperations.BlockSeatExternalDTO blockSeatExternalDTO);
+
+    @PostMapping("/customer/unblock_seat")
+    ResponseEntity<com.shubilet.api_gateway.dataTransferObjects.MessageDTO> unblockSeat(HttpSession httpSession, @RequestBody com.shubilet.api_gateway.dataTransferObjects.external.requests.expeditionOperations.BlockSeatExternalDTO blockSeatExternalDTO);
 }

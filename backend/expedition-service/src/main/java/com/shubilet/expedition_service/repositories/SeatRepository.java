@@ -272,4 +272,6 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
             @Param("now") Instant now
     );
 
+    List<Seat> findAllByExpeditionIdOrderBySeatNoAsc(int expeditionId);
+
 }

@@ -164,4 +164,10 @@ public interface RezervationController {
     */
     @PostMapping("/view_cards")
     public ResponseEntity<CardsDTO> viewCards(CustomerIdDTO customerIdDTO);
+
+    @PostMapping("/block_seat")
+    public ResponseEntity<com.shubilet.expedition_service.dataTransferObjects.responses.message.MessageDTO> blockSeat(@RequestBody com.shubilet.expedition_service.dataTransferObjects.requests.BlockSeatDTO blockSeatDTO);
+
+    @PostMapping("/unblock_seat")
+    public ResponseEntity<com.shubilet.expedition_service.dataTransferObjects.responses.message.MessageDTO> unblockSeat(@RequestBody com.shubilet.expedition_service.dataTransferObjects.requests.BlockSeatDTO blockSeatDTO);
 }

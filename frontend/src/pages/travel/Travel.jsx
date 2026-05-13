@@ -147,19 +147,7 @@ export default function Travel() {
         fetchExpeditions();
     };
 
-    const toggleExpedition = async (expeditionId) => {
-        if (expandedExpeditionId === expeditionId) {
-            setExpandedExpeditionId(null);
-            setSeats([]);
-            setSelectedSeat(null);
-            return;
-        }
-
-        setExpandedExpeditionId(expeditionId);
-        setSelectedSeat(null);
-        setIsSeatsLoading(true);
-        setSeats([]);
-
+    const fetchSeats = async (expeditionId) => {
         try {
             const response = await fetch("/api/expedition/customer/get/search/seats", {
                 method: "POST",
@@ -173,7 +161,6 @@ export default function Travel() {
 
             if (!response.ok) {
                 console.error("Failed to fetch seats:", response.statusText);
-                setIsSeatsLoading(false);
                 return;
             }
 
@@ -183,16 +170,96 @@ export default function Travel() {
             }
         } catch (error) {
             console.error("Error fetching seats:", error);
-        } finally {
-            setIsSeatsLoading(false);
         }
     };
 
-    const onSelectSeat = (seatNo) => {
+    const toggleExpedition = async (expeditionId) => {
+        if (expandedExpeditionId === expeditionId) {
+            // If we have a selected seat, unblock it before closing
+            if (selectedSeat) {
+                try {
+                    await fetch("/api/expedition/customer/unblock_seat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ expeditionId: expandedExpeditionId, seatNo: selectedSeat })
+                    });
+                } catch (err) {
+                    console.error("Failed to unblock seat on close:", err);
+                }
+            }
+            setExpandedExpeditionId(null);
+            setSeats([]);
+            setSelectedSeat(null);
+            return;
+        }
+
+        setExpandedExpeditionId(expeditionId);
+        setSelectedSeat(null);
+        setIsSeatsLoading(true);
+        setSeats([]);
+        await fetchSeats(expeditionId);
+        setIsSeatsLoading(false);
+    };
+
+    // Polling for seat updates
+    useEffect(() => {
+        let interval;
+        if (expandedExpeditionId) {
+            interval = setInterval(() => {
+                fetchSeats(expandedExpeditionId);
+            }, 3000); // Poll every 3 seconds for a snappier feel
+        }
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [expandedExpeditionId]);
+
+    const onSelectSeat = async (seatNo) => {
         if (selectedSeat === seatNo) {
+            // Unblock seat
+            try {
+                await fetch("/api/expedition/customer/unblock_seat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ expeditionId: expandedExpeditionId, seatNo: seatNo })
+                });
+            } catch (err) {
+                console.error("Failed to unblock seat:", err);
+            }
             setSelectedSeat(null);
         } else {
-            setSelectedSeat(seatNo);
+            // If another seat was selected, unblock it first
+            if (selectedSeat) {
+                try {
+                    await fetch("/api/expedition/customer/unblock_seat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ expeditionId: expandedExpeditionId, seatNo: selectedSeat })
+                    });
+                } catch (err) {
+                    console.error("Failed to unblock previous seat:", err);
+                }
+            }
+
+            // Block new seat
+            try {
+                const res = await fetch("/api/expedition/customer/block_seat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ expeditionId: expandedExpeditionId, seatNo: seatNo })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    setSelectedSeat(seatNo);
+                } else {
+                    alert(data.message || "Could not select seat. It might be blocked by another user.");
+                    // Refresh seats to show updated status
+                    fetchSeats(expandedExpeditionId);
+                }
+            } catch (err) {
+                console.error("Failed to block seat:", err);
+                alert("An error occurred while selecting the seat.");
+            }
         }
     };
 
@@ -229,6 +296,7 @@ export default function Travel() {
             alert(data.message || "Booking Successful! Your ticket has been reserved.");
 
             setExpandedExpeditionId(null); // Close expansion and reset view
+            setSelectedSeat(null);
         } catch (error) {
             console.error("Booking error:", error);
             alert("An error occurred during booking.");
@@ -433,6 +501,7 @@ export default function Travel() {
                                                         <h3>Select your Seat</h3>
                                                         <div className="seatLegend">
                                                             <span className="legendItem"><span className="dot available"></span> Available</span>
+                                                            <span className="legendItem"><span className="dot blocked"></span> Blocked</span>
                                                             <span className="legendItem"><span className="dot booked"></span> Reserved</span>
                                                             <span className="legendItem"><span className="dot selected"></span> Selected</span>
                                                         </div>
@@ -451,7 +520,7 @@ export default function Travel() {
                                                                         key={seat.seatNo}
                                                                         type="button"
                                                                         className={`seat ${seat.status.toLowerCase()} ${selectedSeat === seat.seatNo ? "selected" : ""}`}
-                                                                        disabled={seat.status === "RESERVED"}
+                                                                        disabled={seat.status === "RESERVED" || (seat.status === "BLOCKED" && selectedSeat !== seat.seatNo)}
                                                                         onClick={() => onSelectSeat(seat.seatNo)}
                                                                     >
                                                                         {seat.seatNo}

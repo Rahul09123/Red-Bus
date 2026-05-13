@@ -18,5 +18,9 @@ public interface SeatService {
 
     public int bookSeat(int expeditionId, int customerId, int seatNo);
 
+    public boolean blockSeat(int expeditionId, int seatNo, int customerId);
+
+    public boolean unblockSeat(int expeditionId, int seatNo, int customerId);
+
     public SeatStatus canBeReserved(int expeditionId, int seatNo);
 }

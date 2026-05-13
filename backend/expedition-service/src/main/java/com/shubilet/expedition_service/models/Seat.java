@@ -48,6 +48,12 @@ public class Seat implements Serializable {
     @Column(name = "customer_id", nullable = true, updatable = true)
     private Integer customerId;
 
+    @Column(name = "blocked_by", nullable = true, updatable = true)
+    private Integer blockedBy;
+
+    @Column(name = "blocked_until", nullable = true, updatable = true)
+    private java.time.Instant blockedUntil;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, updatable = true)
@@ -104,13 +110,42 @@ public class Seat implements Serializable {
     }
 
     public SeatStatusForModel getStatus() {
+        if (this.status == SeatStatusForModel.BLOCKED) {
+            if (this.blockedUntil != null && java.time.Instant.now().isAfter(this.blockedUntil)) {
+                return SeatStatusForModel.AVAILABLE;
+            }
+        }
         return status;
     }
+
     public boolean isBooked() {
-        return this.status == SeatStatusForModel.RESERVED;
+        if (this.status == SeatStatusForModel.RESERVED) return true;
+        if (this.status == SeatStatusForModel.BLOCKED) {
+            if (this.blockedUntil != null && java.time.Instant.now().isBefore(this.blockedUntil)) {
+                return true;
+            }
+        }
+        return false;
     }
+
     public void setStatus(SeatStatusForModel status) {
         this.status = status;
+    }
+
+    public Integer getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(Integer blockedBy) {
+        this.blockedBy = blockedBy;
+    }
+
+    public java.time.Instant getBlockedUntil() {
+        return blockedUntil;
+    }
+
+    public void setBlockedUntil(java.time.Instant blockedUntil) {
+        this.blockedUntil = blockedUntil;
     }
     public void setBooked(boolean booked) {
         if (booked) {
