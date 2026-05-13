@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: expedition-service
-        image: rahul0129/redbus-expedition-service:latest
+        image: rahul0129/redbus-expedition-service:71cb2a3
         imagePullPolicy: Always
         ports:
         - containerPort: 8082
