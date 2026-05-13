@@ -149,9 +149,9 @@ The payment service handles payment-domain operations and transaction status man
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{images/report/fig02-overview.png}
-    \caption{Role-driven platform screen}
+    \caption{User Dashboard}
 \end{figure}
-\textbf{Explanation:} This image supports the service-boundary discussion by showing that user interactions are already segmented into contextual flows, which map cleanly onto backend domain services.
+\textbf{Explanation:} The User Dashboard provides a personalized entry point for customers to manage their profile, view booking history, and access the search module. It demonstrates the platform's role-based authorization where specific features are exposed only to authenticated users, ensuring a secure and streamlined user experience.
 
 \section{Advanced Business Logic Implementation}
 
@@ -213,12 +213,7 @@ In addition to business calls, the system has an observability flow:
     \item Kibana provides dashboard-level analysis.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/report/fig03-overview.png}
-    \caption{Functional user flow evidence}
-\end{figure}
-\textbf{Explanation:} This screenshot demonstrates one stage of the operational user journey, aligning with the gateway-mediated communication path described above.
+
 
 \section{Frontend Architecture}
 
