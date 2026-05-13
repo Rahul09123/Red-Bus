@@ -582,12 +582,14 @@ public class ExpeditionOperationsControllerImpl implements ExpeditionOperationsC
         );
 
         HttpEntity<BlockSeatInternalDTO> expeditionServiceBlockSeatRequest = new HttpEntity<>(blockSeatInternalDTO, headers);
-        return restTemplate.exchange(
+        ResponseEntity<MessageDTO> response = restTemplate.exchange(
                 ServiceURLs.EXPEDITION_SERVICE_BLOCK_SEAT_URL,
                 HttpMethod.POST,
                 expeditionServiceBlockSeatRequest,
                 MessageDTO.class
         );
+        logger.info("Expedition Service Block Seat Response: status={}, body={}", response.getStatusCode(), response.getBody());
+        return response;
     }
 
     @Override
