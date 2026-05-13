@@ -359,10 +359,14 @@ public class ReservationControllerImpl implements RezervationController {
     @Override
     @PostMapping("/block_seat")
     public ResponseEntity<MessageDTO> blockSeat(@RequestBody BlockSeatDTO blockSeatDTO) {
+        logger.info("Attempting to block seat: expeditionId={}, seatNo={}, customerId={}", 
+            blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
         boolean success = seatService.blockSeat(blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
         if (success) {
+            logger.info("Successfully blocked seat: expeditionId={}, seatNo={}", blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo());
             return ResponseEntity.ok(new MessageDTO("Seat blocked successfully"));
         } else {
+            logger.warn("Failed to block seat: expeditionId={}, seatNo={} (Already booked or invalid)", blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo());
             return ResponseEntity.status(400).body(new MessageDTO("Seat could not be blocked"));
         }
     }
@@ -370,10 +374,14 @@ public class ReservationControllerImpl implements RezervationController {
     @Override
     @PostMapping("/unblock_seat")
     public ResponseEntity<MessageDTO> unblockSeat(@RequestBody BlockSeatDTO blockSeatDTO) {
+        logger.info("Attempting to unblock seat: expeditionId={}, seatNo={}, customerId={}", 
+            blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
         boolean success = seatService.unblockSeat(blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo(), blockSeatDTO.getCustomerId());
         if (success) {
+            logger.info("Successfully unblocked seat: expeditionId={}, seatNo={}", blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo());
             return ResponseEntity.ok(new MessageDTO("Seat unblocked successfully"));
         } else {
+            logger.warn("Failed to unblock seat: expeditionId={}, seatNo={} (Not blocked by this user or invalid)", blockSeatDTO.getExpeditionId(), blockSeatDTO.getSeatNo());
             return ResponseEntity.status(400).body(new MessageDTO("Seat could not be unblocked"));
         }
     }
