@@ -174,6 +174,17 @@ To improve the user experience, the search results page integrates \texttt{React
 \end{figure}
 \textbf{Explanation:} This visualization provides users with a clear geospatial understanding of the journey path. By mapping city coordinates and drawing a dynamic polyline, the platform enhances the booking experience with real-time feedback on the selected route.
 
+\subsection{Real-Time Seat Blocking}
+
+To prevent race conditions and improve concurrent booking reliability, the platform implements a real-time seat blocking mechanism. When a user selects a seat, it is immediately marked as \texttt{BLOCKED} in the database for a duration of 2 minutes. This status is broadcast to all other users viewing the same expedition via a 3-second polling mechanism in the frontend, rendering the seat unavailable (Orange) for them in real-time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/report/Seat_block_feature.png}
+    \caption{Real-Time Seat Blocking and Concurrency Control}
+\end{figure}
+\textbf{Explanation:} This feature ensures data integrity in a high-concurrency environment. By implementing a temporary block at the database level and synchronized UI updates, the system avoids double-booking conflicts and provides immediate visual feedback to all active users.
+
 \subsection{Operator Business Intelligence Dashboard}
 
 The Company (Operator) role features a dedicated dashboard that provides real-time statistics aggregated across all their expeditions. The dashboard tracks:
