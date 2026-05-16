@@ -177,7 +177,7 @@ public class ReservationControllerImpl implements RezervationController {
             return errorUtils.notFound("Seat No: " + seatNo + " for Expedition ID: " + expeditionId);
         }
 
-        SeatStatus seatStatus = seatService.canBeReserved(expeditionId, seatNo);
+        SeatStatus seatStatus = seatService.canBeReserved(expeditionId, seatNo, customerId);
         ExpeditionStatus expeditionStatus = expeditionService.canBeReserved(expeditionId);
 
         if(seatStatus != SeatStatus.SUCCESS) {

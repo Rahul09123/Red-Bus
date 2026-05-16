@@ -14,26 +14,27 @@
 \contentsline {section}{\numberline {4}Advanced Business Logic Implementation}{5}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Granular Dynamic Pricing Engine}{5}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Interactive Route Visualization}{6}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Operator Business Intelligence Dashboard}{6}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Request Flow}{7}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Operational Data Flow}{7}{subsection.4.5}%
-\contentsline {section}{\numberline {5}Frontend Architecture}{8}{section.5}%
-\contentsline {section}{\numberline {6}CI/CD and Automation}{8}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Jenkins Pipeline Architecture}{8}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Build and Packaging Strategy}{9}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Deployment Automation}{9}{subsection.6.3}%
-\contentsline {subsubsection}{\numberline {6.3.1}Service Build Pipelines}{10}{subsubsection.6.3.1}%
-\contentsline {section}{\numberline {7}Kubernetes Orchestration}{12}{section.7}%
-\contentsline {subsection}{\numberline {7.1}ConfigMap Usage (\texttt {k8s/configmap.yaml})}{13}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Secret Usage (\texttt {k8s/deprecated-secrets/secrets.yaml})}{13}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}API Gateway Role in Kubernetes}{13}{subsection.7.3}%
-\contentsline {subsection}{\numberline {7.4}Ingress Configuration (\texttt {k8s/ingress.yaml})}{14}{subsection.7.4}%
-\contentsline {subsection}{\numberline {7.5}Health and Self-Healing}{14}{subsection.7.5}%
-\contentsline {subsection}{\numberline {7.6}Horizontal Scaling with HPA (\texttt {k8s/hpa.yaml})}{14}{subsection.7.6}%
-\contentsline {subsection}{\numberline {7.7}ELK on Kubernetes (\texttt {k8s/elk-stack.yaml})}{14}{subsection.7.7}%
-\contentsline {section}{\numberline {8}Configuration Management with Ansible}{15}{section.8}%
-\contentsline {section}{\numberline {9}Observability and Monitoring (ELK Stack)}{15}{section.9}%
-\contentsline {section}{\numberline {10}Security and Secret Management}{16}{section.10}%
-\contentsline {section}{\numberline {11}Results, Evaluation, and Conclusion}{18}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Evaluation Alignment}{18}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Conclusion}{19}{subsection.11.2}%
+\contentsline {subsection}{\numberline {4.3}Real-Time Seat Blocking}{6}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Operator Business Intelligence Dashboard}{7}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Request Flow}{8}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Operational Data Flow}{8}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Frontend Architecture}{9}{section.5}%
+\contentsline {section}{\numberline {6}CI/CD and Automation}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Jenkins Pipeline Architecture}{9}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Build and Packaging Strategy}{10}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Deployment Automation}{10}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}Service Build Pipelines}{11}{subsubsection.6.3.1}%
+\contentsline {section}{\numberline {7}Kubernetes Orchestration}{13}{section.7}%
+\contentsline {subsection}{\numberline {7.1}ConfigMap Usage (\texttt {k8s/configmap.yaml})}{14}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Secret Usage (\texttt {k8s/deprecated-secrets/secrets.yaml})}{14}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}API Gateway Role in Kubernetes}{14}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Ingress Configuration (\texttt {k8s/ingress.yaml})}{15}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Health and Self-Healing}{15}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Horizontal Scaling with HPA (\texttt {k8s/hpa.yaml})}{15}{subsection.7.6}%
+\contentsline {subsection}{\numberline {7.7}ELK on Kubernetes (\texttt {k8s/elk-stack.yaml})}{15}{subsection.7.7}%
+\contentsline {section}{\numberline {8}Configuration Management with Ansible}{16}{section.8}%
+\contentsline {section}{\numberline {9}Observability and Monitoring (ELK Stack)}{16}{section.9}%
+\contentsline {section}{\numberline {10}Security and Secret Management}{17}{section.10}%
+\contentsline {section}{\numberline {11}Results, Evaluation, and Conclusion}{19}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Evaluation Alignment}{19}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Conclusion}{20}{subsection.11.2}%

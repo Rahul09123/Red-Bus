@@ -251,26 +251,7 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
         @return a list of {@link SeatForCustomerRepoDTO} representing seats available
         for customer visibility, ordered by seat number
     */
-    @Query("""
-        SELECT new com.shubilet.expedition_service.dataTransferObjects.responses.forRepositories.SeatForCustomerRepoDTO(
-            s.expeditionId,
-            s.seatNo,
-            s.status
-        )
-        FROM Seat s
-        WHERE s.expeditionId IN (
-                SELECT e.id 
-                FROM Expedition e 
-                WHERE e.dateAndTime >= :now
-                    AND e.capacity > e.numberOfBookedSeats
-            )
-            AND s.expeditionId = :expeditionId
-        ORDER BY s.seatNo ASC
-    """)
-    List<SeatForCustomerRepoDTO> findSeatsByExpeditionIdAndStatus(
-            @Param("expeditionId") int expeditionId,
-            @Param("now") Instant now
-    );
+
 
     List<Seat> findAllByExpeditionIdOrderBySeatNoAsc(int expeditionId);
 

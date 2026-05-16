@@ -117,7 +117,7 @@ public class SeatServiceImpl implements SeatService {
         return false;
     }
 
-    public SeatStatus canBeReserved(int expeditionId, int seatNo) {
+    public SeatStatus canBeReserved(int expeditionId, int seatNo, int customerId) {
         Seat seat = seatRepository.findByExpeditionIdAndSeatNo(expeditionId, seatNo);
 
         if(seat == null) {
@@ -125,6 +125,11 @@ public class SeatServiceImpl implements SeatService {
         }
 
         if(seat.isBooked()) {
+            // If it's blocked by the SAME customer, we allow them to proceed to book it.
+            if (seat.getStatus() == com.shubilet.expedition_service.common.enums.SeatStatusForModel.BLOCKED 
+                && seat.getBlockedBy() != null && seat.getBlockedBy() == customerId) {
+                return SeatStatus.SUCCESS;
+            }
             return SeatStatus.ALREADY_BOOKED;
         }
 

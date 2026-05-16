@@ -22,5 +22,5 @@ public interface SeatService {
 
     public boolean unblockSeat(int expeditionId, int seatNo, int customerId);
 
-    public SeatStatus canBeReserved(int expeditionId, int seatNo);
+    public SeatStatus canBeReserved(int expeditionId, int seatNo, int customerId);
 }
